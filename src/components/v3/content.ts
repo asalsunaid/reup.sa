@@ -5,7 +5,6 @@ const IMG = "https://reup.sa/images";
 // v3 copy follows Zid's voice: short, warm, lightly Saudi in Arabic. Shared strings (nav, FAQ, contact) stay in lib/content.
 const ar = {
   meta: { title: "REUP | كل أعمالك في مساحة وحدة" },
-  announce: { text: "احجز عرضاً مخصصاً لقطاعك، ونوريك REUP على أرض الواقع", link: "احجز عرضك" },
   cta: "احجز عرضك",
   explore: "شوف الحلول",
   nav: [
@@ -27,25 +26,12 @@ const ar = {
       { kind: "invoice", title: "فاتورة ضريبية صادرة", body: "INV-2026-0418" },
     ],
   },
-  partners: "شركاء يشتغلون معنا",
+  partners: "شركاء معنا",
   offer: {
     title: "مساحة وحدة، وحلول تكمّل بعض",
     sub: "كل منشأة تاخذ مساحتها الخاصة، وتفعّل الحلول اللي تحتاجها بس.",
-    space: {
-      chip: "مساحتك الخاصة",
-      title: "نطاقك وهويتك من أول يوم",
-      body: "شعارك وألوانك على نطاق فرعي، واربط نطاقك الخاص متى ما حبيت.",
-      domain: "alreem.reup.sa",
-    },
-    suite: {
-      chip: "حلول جاهزة",
-      title: "فعّل اللي تحتاجه بس",
-      items: [
-        { q: "عندك عقارات؟", a: "PropUp يدير العقود والتحصيل والصيانة." },
-        { q: "عندك عيادة؟", a: "MedUp للمواعيد وملفات المرضى والتأمين." },
-      ],
-      note: "وكل الحلول تشتغل مع بعض في نفس المساحة.",
-    },
+    rolesTitle: "صلاحيات لكل موظف",
+    domain: "alreem.reup.sa",
   },
   audience: {
     badge: "لمين REUP؟",
@@ -55,7 +41,7 @@ const ar = {
       {
         icon: "start",
         title: "توك تبدأ؟",
-        body: "اختر الحل اللي يناسب نشاطك، ونجهّز مساحتك ونمشي معك خطوة بخطوة.",
+        body: "اختر الحل اللي يناسب نشاطك، وجهّز مساحتك وانطلق.",
         cta: "اختر حلك",
         href: "#solutions",
       },
@@ -68,15 +54,15 @@ const ar = {
       },
       {
         icon: "move",
-        title: "تشتغل على نظام ثاني؟",
-        body: "نساعدك تنقل بياناتك وتبدأ على REUP بأقل مجهود.",
+        title: "تشتغل على أكثر من نظام؟",
+        body: "نساعدك تنقل بياناتك المتفرقة وتبدأ على REUP بأقل مجهود.",
         cta: "احجز عرضك",
         href: "#contact",
       },
     ],
   },
   solutions: {
-    title: "حل جاهز لكل قطاع",
+    title: "حلول جاهزة لكل قطاع",
     sub: "اختر حلك، وكل حل يجيك بأدواته جاهزة من أول يوم.",
     note: "كل الحلول تشتغل في نفس المساحة وبنفس الحساب.",
     items: [
@@ -146,7 +132,7 @@ const ar = {
   team: {
     badge: "مو لحالك",
     title: "ما نسلّمك النظام ونمشي.",
-    body: "فريق REUP يجهّز مساحتك معك، ويدرّب فريقك، ويكون قريب منك بعد الإطلاق.",
+    body: "فريق REUP جاهز معك، يدرّب فريقك، ويكون قريب منك بعد الإطلاق.",
     image: `${IMG}/impact-team.png`,
     alt: "فريق REUP في اجتماع مع عميل",
     floats: [
@@ -155,9 +141,9 @@ const ar = {
     ],
   },
   apps: {
-    title: "فعّل الحل اللي تحتاجه، بضغطة وحدة",
-    sub: "كل حل في REUP تطبيق تفعّله لمساحتك متى ما احتجته، ويشتغل مع البقية مباشرة.",
-    image: "/images/v3/dashboard-apps.webp",
+    title: "فعّل كل اللي تحتاجه، بضغطة وحدة",
+    sub: "كل حل في REUP تفعّله لمساحتك متى ما احتجته، ويشتغل بدون نقل وإعادة تعريف.",
+    image: "/images/v3/dashboard-apps-2.webp",
     imageAlt:
       "شاشة التطبيقات في لوحة تحكم REUP: PropUp وMedUp وHRUp وCRM وFinance وProjects مفعّلة، وInventory وAnalytics متاحة للتفعيل",
   },
@@ -174,7 +160,6 @@ export type V3Dict = typeof ar;
 
 const en: V3Dict = {
   meta: { title: "REUP | Your whole business, one space" },
-  announce: { text: "Book a demo tailored to your sector and see REUP in action", link: "Book a demo" },
   cta: "Book a demo",
   explore: "See solutions",
   nav: [
@@ -196,25 +181,12 @@ const en: V3Dict = {
       { kind: "invoice", title: "Tax invoice issued", body: "INV-2026-0418" },
     ],
   },
-  partners: "Partners we work with",
+  partners: "Our partners",
   offer: {
     title: "One space, solutions that fit together",
     sub: "Every business gets its own space and switches on only what it needs.",
-    space: {
-      chip: "Your own space",
-      title: "Your domain and brand from day one",
-      body: "Your logo and colors on a subdomain, and connect your own domain whenever you like.",
-      domain: "alreem.reup.sa",
-    },
-    suite: {
-      chip: "Ready-made solutions",
-      title: "Switch on only what you need",
-      items: [
-        { q: "Own property?", a: "PropUp runs leases, collection and maintenance." },
-        { q: "Run a clinic?", a: "MedUp handles bookings, patient files and insurance." },
-      ],
-      note: "And every solution works together in the same space.",
-    },
+    rolesTitle: "Roles for every employee",
+    domain: "alreem.reup.sa",
   },
   audience: {
     badge: "Who it's for",
@@ -224,7 +196,7 @@ const en: V3Dict = {
       {
         icon: "start",
         title: "Just starting?",
-        body: "Pick the solution that fits your business. We set up your space and walk with you step by step.",
+        body: "Pick the solution that fits your business, set up your space and go.",
         cta: "Pick a solution",
         href: "#solutions",
       },
@@ -237,15 +209,15 @@ const en: V3Dict = {
       },
       {
         icon: "move",
-        title: "On another system?",
-        body: "We help you move your data and get started on REUP with minimal effort.",
+        title: "Running on several systems?",
+        body: "We help you bring your scattered data together and start on REUP with minimal effort.",
         cta: "Book a demo",
         href: "#contact",
       },
     ],
   },
   solutions: {
-    title: "A ready solution for every sector",
+    title: "Ready-made solutions for every sector",
     sub: "Pick your solution. Each one arrives with its tools ready from day one.",
     note: "Every solution runs in the same space, on the same account.",
     items: [
@@ -316,7 +288,7 @@ const en: V3Dict = {
   team: {
     badge: "You're not alone",
     title: "We don't hand over the keys and leave.",
-    body: "The REUP team sets up your space with you, trains your people and stays close after launch.",
+    body: "The REUP team is with you: it trains your people and stays close after launch.",
     image: `${IMG}/impact-team.png`,
     alt: "The REUP team meeting a customer",
     floats: [
@@ -325,9 +297,9 @@ const en: V3Dict = {
     ],
   },
   apps: {
-    title: "Switch on what you need, in one click",
-    sub: "Every REUP solution is an app you activate for your space when you need it, and it works with the rest right away.",
-    image: "/images/v3/dashboard-apps.webp",
+    title: "Switch on everything you need, in one click",
+    sub: "Activate any REUP solution for your space whenever you need it. It runs without migrating or setting things up again.",
+    image: "/images/v3/dashboard-apps-2.webp",
     imageAlt:
       "The Apps screen in the REUP dashboard: PropUp, MedUp, HRUp, CRM, Finance and Projects are active, with Inventory and Analytics available to switch on",
   },

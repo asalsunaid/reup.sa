@@ -88,27 +88,7 @@
   top: 12px;
 }
 
-/* ---------- Announcement + header ---------- */
-.v3-announce {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 6px 10px;
-  padding: 10px 16px;
-  background: var(--z-neutral);
-  font-size: 13.5px;
-  text-align: center;
-}
-.v3-announce svg {
-  color: var(--z-accent-text);
-}
-.v3-announce a {
-  font-weight: 600;
-  color: var(--z-accent-text);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
+/* ---------- Header ---------- */
 .v3-header {
   position: sticky;
   top: 0;
@@ -294,25 +274,6 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
-.v3-chip {
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  height: 30px;
-  padding-inline: 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-}
-.v3-chip-ink {
-  background: var(--z-solid);
-  color: var(--z-on-solid);
-}
-.v3-chip-lilac {
-  background: var(--z-lilac);
-  color: var(--z-lilac-ink);
-}
-
 /* ---------- Hero ---------- */
 .v3-heroWrap {
   padding: 16px;
@@ -330,9 +291,17 @@
   background: var(--z-dark);
   border: 1px solid var(--z-dark-line);
 }
+/* Oversized by the parallax travel so the photo never shows an edge while it drifts */
+.v3-heroImageLayer {
+  position: absolute;
+  inset: -24px;
+  z-index: -2;
+}
 .v3-heroImage {
   object-fit: cover;
-  z-index: -2;
+}
+.v3-heroFloatsLayer {
+  justify-self: center;
 }
 .v3-heroScrim {
   position: absolute;
@@ -397,7 +366,6 @@
   justify-content: center;
 }
 .v3-heroFloats {
-  justify-self: center;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -499,30 +467,60 @@
   }
 }
 
-/* ---------- Partners ---------- */
+/* ---------- Partners (colour logos on the shared marquee from globals.css) ---------- */
 .v3-partners {
-  max-width: 1200px;
-  margin-inline: auto;
-  padding: 44px 24px 60px;
+  padding: 44px 0 60px;
   text-align: center;
 }
 .v3-partners > p {
   font-size: 14px;
   color: var(--z-muted);
 }
-.v3-partnerRow {
+.v3-marquee {
   margin-top: 26px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 28px 64px;
 }
-.v3-partnerRow img {
-  height: 40px;
+.v3-logoSet {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 72px;
+  margin: 0;
+  padding: 0 72px 0 0;
+  list-style: none;
+}
+.v3-logoSet li {
+  display: grid;
+  place-items: center;
+  width: 140px;
+  height: 64px;
+  /* An opaque backdrop gives the blend-mode logo something to blend with inside the masked strip */
+  background: var(--z-bg);
+}
+.v3-logo {
+  height: 46px;
   width: auto;
-  max-width: 130px;
+  max-width: 140px;
   object-fit: contain;
+  transition:
+    transform 260ms var(--ease-out),
+    opacity 200ms ease;
+}
+.v3-logo[data-opaque] {
+  mix-blend-mode: multiply;
+}
+[data-theme="dark"] .v3-logo {
+  filter: brightness(0) invert(1);
+  opacity: 0.72;
+}
+[data-theme="dark"] .v3-logo[data-opaque] {
+  filter: grayscale(1) contrast(2.2) invert(1);
+  mix-blend-mode: screen;
+}
+@media (hover: hover) and (pointer: fine) {
+  .v3-logo:hover {
+    transform: scale(1.08);
+    opacity: 1;
+  }
 }
 
 /* ---------- Bands, headings, cards ---------- */
@@ -575,70 +573,100 @@
   background: var(--z-card-muted);
 }
 
-/* ---------- Offer ---------- */
-.v3-offerGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+/* ---------- Micro-interactions ---------- */
+/* Pointer spotlight: SpotlightGroup writes --mx/--my on the hovered .spot-cell */
+.v3-page .spot-cell {
+  position: relative;
+  isolation: isolate;
+  --spot: rgb(214 0 90 / 0.075);
 }
-.v3-offerCard {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.v3-page .spot-dark {
+  --spot: rgb(255 255 255 / 0.13);
 }
-.v3-offerCard h3 {
-  margin-top: 6px;
-  font-size: 24px;
-  line-height: 1.45;
-  font-weight: 700;
+[data-theme="dark"] .v3-page .spot-cell:not(.spot-dark) {
+  --spot: rgb(255 106 165 / 0.09);
 }
-.v3-offerCard > p {
-  font-size: 16px;
-  line-height: 1.8;
-  color: var(--z-muted);
+.v3-page .spot-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), var(--spot), transparent 65%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
 }
-.v3-highlight {
-  margin-top: auto;
-  padding: 34px 24px;
-  border-radius: 24px;
-  background: var(--z-blush);
-  color: var(--z-blush-ink);
-  text-align: center;
-  font-size: clamp(28px, 3.4vw, 42px);
-  font-weight: 500;
-  line-height: 1.2;
-  overflow-wrap: anywhere;
+/* Lift uses the standalone `translate` property so it stacks with the reveal's inline transform */
+.v3-page .v3-lift,
+.v3-bento .spot-cell {
+  transition:
+    translate 300ms var(--ease-out),
+    box-shadow 300ms var(--ease-out);
 }
-.v3-highlight span {
-  font-weight: 700;
-}
-.v3-innerGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 6px;
-}
-.v3-inner {
-  padding: 20px;
-  border-radius: 24px;
-  background: var(--z-card-muted);
-}
-.v3-inner b {
-  display: block;
-  font-size: 16px;
-  font-weight: 700;
-}
-.v3-inner p {
-  margin-top: 8px;
-  font-size: 14.5px;
-  line-height: 1.75;
-  color: var(--z-muted);
-}
-.v3-note {
-  margin-top: auto;
-  padding-top: 6px;
-  font-size: 14px;
-  color: var(--z-muted);
+@media (hover: hover) and (pointer: fine) {
+  .v3-page .spot-cell:hover::after {
+    opacity: 1;
+  }
+  .v3-page .v3-lift:hover,
+  .v3-bento .spot-cell:hover {
+    translate: 0 -4px;
+    box-shadow: 0 22px 44px -26px rgb(32 23 81 / 0.35);
+  }
+  .v3-heroFloats .v3-floatCard {
+    transition:
+      translate 260ms var(--ease-out),
+      box-shadow 260ms var(--ease-out);
+  }
+  .v3-heroFloats .v3-floatCard:hover {
+    translate: 0 -4px;
+    box-shadow: 0 30px 50px -18px rgb(8 4 36 / 0.6);
+  }
+  /* Audience: icon tile tips over with a little overshoot */
+  .v3-audienceCard .v3-iconTile {
+    transition:
+      rotate 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      scale 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+  .v3-audienceCard:hover .v3-iconTile {
+    rotate: -10deg;
+    scale: 1.08;
+    background: var(--z-accent);
+    color: #fffafc;
+  }
+  /* Solutions: the hovered row lights its chip and slides its arrow */
+  .v3-solutionCard li .v3-rowChip {
+    transition: background-color 200ms ease;
+  }
+  .v3-solutionCard li .v3-rowArrow {
+    transition:
+      translate 220ms var(--ease-out),
+      color 200ms ease;
+  }
+  .v3-solutionCard li:hover .v3-rowChip {
+    background: var(--z-accent);
+    color: #fffafc;
+  }
+  .v3-solutionCard li:hover .v3-rowArrow {
+    color: var(--z-accent-text);
+  }
+  [dir="rtl"] .v3-solutionCard li:hover .v3-rowArrow {
+    translate: -4px 0;
+  }
+  [dir="ltr"] .v3-solutionCard li:hover .v3-rowArrow {
+    translate: 4px 0;
+  }
+  /* Photos ease in a touch closer under the pointer */
+  .v3-splitPhoto img,
+  .v3-finalImage {
+    transition: scale 1200ms var(--ease-out);
+  }
+  .v3-splitMedia:hover .v3-splitPhoto img,
+  .v3-final:hover .v3-finalImage {
+    scale: 1.04;
+  }
 }
 
 /* ---------- Audience ---------- */
@@ -926,16 +954,16 @@
   border-radius: 40px;
   background: var(--z-neutral);
 }
-/* The capture ships with its own device bezel on a square black canvas;
-   the radius matches the bezel's outer corner (about 52px on the 2000x1147 source). */
+.v3-appTilt {
+  transform-origin: center bottom;
+  will-change: transform;
+}
+/* The capture has transparent rounded corners, so drop-shadow follows the device outline */
 .v3-appShot {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 2.6% / 4.53%;
-  box-shadow:
-    0 2px 6px rgb(32 23 81 / 0.08),
-    0 44px 80px -40px rgb(32 23 81 / 0.45);
+  filter: drop-shadow(0 2px 4px rgb(32 23 81 / 0.1)) drop-shadow(0 30px 40px rgb(32 23 81 / 0.22));
 }
 @media (max-width: 639px) {
   .v3-appStage {
@@ -1123,14 +1151,13 @@
     grid-template-columns: 1fr;
     padding: 64px 32px;
   }
-  .v3-heroFloats {
+  .v3-heroFloatsLayer {
     display: none;
   }
   .v3-heroScrim,
   [dir="ltr"] .v3-heroScrim {
     background: linear-gradient(180deg, rgb(28 20 71 / 0.82), rgb(28 20 71 / 0.9));
   }
-  .v3-offerGrid,
   .v3-splitGrid {
     grid-template-columns: 1fr;
   }
@@ -1175,14 +1202,19 @@
     padding: 8px;
   }
   .v3-partners {
-    padding: 36px 20px 44px;
+    padding: 36px 0 44px;
   }
-  .v3-partnerRow {
-    gap: 20px 32px;
+  .v3-logoSet {
+    gap: 40px;
+    padding-inline-end: 40px;
   }
-  .v3-partnerRow img {
-    height: 30px;
-    max-width: 92px;
+  .v3-logoSet li {
+    width: 104px;
+    height: 52px;
+  }
+  .v3-logo {
+    height: 34px;
+    max-width: 104px;
   }
   .v3-hero {
     border-radius: 28px;
@@ -1209,7 +1241,6 @@
     padding: 24px;
     border-radius: 28px;
   }
-  .v3-innerGrid,
   .v3-numberGrid {
     grid-template-columns: 1fr;
   }
@@ -1274,6 +1305,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .v3-page .v3-lift,
+  .v3-bento .spot-cell,
+  .v3-heroFloats .v3-floatCard,
+  .v3-audienceCard .v3-iconTile,
+  .v3-solutionCard li .v3-rowArrow,
+  .v3-splitPhoto img,
+  .v3-finalImage {
+    translate: none !important;
+    rotate: none !important;
+    scale: none !important;
+  }
   .v3-floatCard,
   .v3-livePing::after {
     animation: none;

@@ -156,6 +156,9 @@ const ar = {
     roles: {
       title: "صلاحيات لكل فرد",
       body: "أدوار للمالك والمحاسب والاستقبال، وكل شخص يرى ما يخصه فقط.",
+      permissions: ["المواعيد", "الفواتير", "التقارير", "الإعدادات"],
+      allowed: "مسموح",
+      blocked: "غير مسموح",
       people: [
         { name: "عبدالله المطيري", role: "المالك", initial: "ع" },
         { name: "نورة الزهراني", role: "محاسبة", initial: "ن" },
@@ -487,6 +490,9 @@ const en: Dict = {
     roles: {
       title: "Roles for everyone",
       body: "Owner, accountant and front desk roles. Everyone sees only what they need.",
+      permissions: ["Calendar", "Invoices", "Reports", "Settings"],
+      allowed: "allowed",
+      blocked: "not allowed",
       people: [
         { name: "Abdullah Almutairi", role: "Owner", initial: "A" },
         { name: "Noura Alzahrani", role: "Accountant", initial: "N" },
