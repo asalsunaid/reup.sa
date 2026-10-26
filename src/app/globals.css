@@ -144,14 +144,6 @@ body {
   color: var(--on-accent);
 }
 
-/* Latin display type gets tightened; Arabic never takes letter-spacing because it breaks joining. */
-:lang(en) .display {
-  letter-spacing: -0.028em;
-}
-:lang(en) .display-tight {
-  letter-spacing: -0.02em;
-}
-
 .tabular {
   font-variant-numeric: tabular-nums;
 }
@@ -188,14 +180,6 @@ body {
   .btn:active {
     transform: scale(0.97);
   }
-  .btn-primary {
-    background: var(--accent-fill);
-    color: var(--on-accent);
-    box-shadow:
-      0 1px 0 rgb(255 255 255 / 0.22) inset,
-      0 1px 2px rgb(214 0 90 / 0.25),
-      0 8px 20px -8px rgb(214 0 90 / 0.55);
-  }
   .btn-ghost {
     background: var(--surface);
     color: var(--ink);
@@ -206,27 +190,9 @@ body {
     padding-inline: 1.125rem;
     font-size: 0.9rem;
   }
-  /* Narrow phones: keep the hero's two CTAs on one row */
-  @media (max-width: 400px) {
-    .btn:not(.btn-sm) {
-      padding-inline: 1.05rem;
-      font-size: 0.94rem;
-    }
-  }
-  .btn .btn-arrow {
-    transition: transform 200ms var(--ease-out);
-  }
   @media (hover: hover) and (pointer: fine) {
-    .btn-primary:hover {
-      background: var(--accent-fill-hover);
-    }
     .btn-ghost:hover {
       border-color: var(--ink);
-    }
-    /* Arrows are mirrored in RTL via the `scale` property, so one positive nudge reads "forward" in both directions. */
-    .btn:hover .btn-arrow,
-    .link-arrow:hover .btn-arrow {
-      transform: translateX(3px);
     }
   }
 }
@@ -265,32 +231,6 @@ body {
   animation-delay: 260ms;
 }
 
-/* Auto-advance timer on the tenant switcher: constant progress, so linear. */
-@keyframes progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-/* ---------- Ambient hero glow: slow, decorative, off under reduced motion ---------- */
-@keyframes drift {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(-6%, 8%, 0) scale(1.18);
-  }
-}
-.hero-glow {
-  animation: drift 26s ease-in-out infinite alternate;
-}
-.hero-glow-2 {
-  animation: drift 32s ease-in-out -9s infinite alternate-reverse;
-}
-
 /* ---------- Partner marquee (constant motion, so linear) ---------- */
 @keyframes marquee {
   from {
@@ -315,37 +255,6 @@ body {
     animation-play-state: paused;
   }
 }
-.partner-logo {
-  filter: brightness(0);
-  opacity: 0.5;
-  transition: opacity 200ms ease;
-}
-.partner-logo:hover {
-  opacity: 0.85;
-}
-.partner-logo[data-opaque] {
-  filter: grayscale(1) contrast(2.2);
-  mix-blend-mode: multiply;
-}
-:root[data-theme="dark"] .partner-logo {
-  filter: brightness(0) invert(1);
-  opacity: 0.55;
-}
-:root[data-theme="dark"] .partner-logo[data-opaque] {
-  filter: grayscale(1) contrast(2.2) invert(1);
-  mix-blend-mode: screen;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .partner-logo {
-    filter: brightness(0) invert(1);
-    opacity: 0.55;
-  }
-  :root:not([data-theme]) .partner-logo[data-opaque] {
-    filter: grayscale(1) contrast(2.2) invert(1);
-    mix-blend-mode: screen;
-  }
-}
-
 /* ---------- Accordion (grid-rows technique, no height measuring) ---------- */
 .accordion-panel {
   display: grid;
@@ -378,8 +287,6 @@ body {
   .rise-scale {
     animation: fade 300ms ease both;
   }
-  .hero-glow,
-  .hero-glow-2,
   .marquee-track {
     animation: none;
   }

@@ -1,5 +1,7 @@
-import { Landing } from "@/components/landing";
+import { V3Landing, v3Metadata } from "@/components/v3/landing";
+
+export const metadata = v3Metadata("en");
 
 export default function Page() {
-  return <Landing locale="en" />;
+  return <V3Landing locale="en" />;
 }

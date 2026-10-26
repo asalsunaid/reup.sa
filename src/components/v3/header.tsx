@@ -12,7 +12,7 @@ export function V3Header({ nav, v3, locale }: { nav: Dict["nav"]; v3: V3Dict; lo
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const ar = locale === "ar";
-  const otherHref = ar ? "/en/v3" : "/v3";
+  const otherHref = ar ? "/en" : "/";
 
   useEffect(() => {
     if (!open) return;
