@@ -154,15 +154,12 @@ const ar = {
       { title: "تم تفعيل MedUp", body: "عيادات سنا" },
     ],
   },
-  details: {
-    title: "تفاصيل المنصة",
-    rows: [
-      ["النطاق", "نطاق فرعي على reup.sa أو نطاقك الخاص"],
-      ["الحلول", "PropUp و MedUp و FiUp و CxUp والفوترة الإلكترونية"],
-      ["الصلاحيات", "أدوار للمالك والمحاسب والاستقبال"],
-      ["البيانات", "معزولة لكل منشأة ومشفرة"],
-      ["اللغة", "عربي وإنجليزي بالكامل"],
-    ],
+  apps: {
+    title: "فعّل الحل اللي تحتاجه، بضغطة وحدة",
+    sub: "كل حل في REUP تطبيق تفعّله لمساحتك متى ما احتجته، ويشتغل مع البقية مباشرة.",
+    image: "/images/v3/dashboard-apps.webp",
+    imageAlt:
+      "شاشة التطبيقات في لوحة تحكم REUP: PropUp وMedUp وHRUp وCRM وFinance وProjects مفعّلة، وInventory وAnalytics متاحة للتفعيل",
   },
   faq: { badge: "أسئلة متكررة", title: "كل اللي يشغل بالك." },
   final: {
@@ -327,15 +324,12 @@ const en: V3Dict = {
       { title: "MedUp activated", body: "Sana Clinics" },
     ],
   },
-  details: {
-    title: "Platform details",
-    rows: [
-      ["Domain", "A reup.sa subdomain or your own domain"],
-      ["Solutions", "PropUp, MedUp, FiUp, CxUp and E-invoicing"],
-      ["Permissions", "Roles for owner, accountant and front desk"],
-      ["Data", "Isolated per business and encrypted"],
-      ["Language", "Fully Arabic and English"],
-    ],
+  apps: {
+    title: "Switch on what you need, in one click",
+    sub: "Every REUP solution is an app you activate for your space when you need it, and it works with the rest right away.",
+    image: "/images/v3/dashboard-apps.webp",
+    imageAlt:
+      "The Apps screen in the REUP dashboard: PropUp, MedUp, HRUp, CRM, Finance and Projects are active, with Inventory and Analytics available to switch on",
   },
   faq: { badge: "FAQ", title: "Everything on your mind." },
   final: {

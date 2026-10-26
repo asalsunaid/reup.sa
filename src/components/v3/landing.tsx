@@ -333,19 +333,23 @@ export function V3Landing({ locale }: { locale: Locale }) {
           </div>
         </section>
 
-        {/* Details table */}
-        <section className="v3-band">
+        {/* Apps screen: a real capture of the dashboard, so visitors see modules being switched on */}
+        <section id="apps" className="v3-band">
           <div className="v3-container">
-            <Reveal className="v3-details">
-              <h2>{v.details.title}</h2>
-              <dl>
-                {v.details.rows.map(([k, val]) => (
-                  <div key={k}>
-                    <dt>{k}</dt>
-                    <dd>{val}</dd>
-                  </div>
-                ))}
-              </dl>
+            <Reveal className="v3-head v3-head-center">
+              <h2>{v.apps.title}</h2>
+              <p>{v.apps.sub}</p>
+            </Reveal>
+            <Reveal className="v3-appStage">
+              <Image
+                src={v.apps.image}
+                alt={v.apps.imageAlt}
+                width={2000}
+                height={1147}
+                quality={90}
+                sizes="(min-width: 1200px) 1088px, calc(100vw - 56px)"
+                className="v3-appShot"
+              />
             </Reveal>
           </div>
         </section>

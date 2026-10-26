@@ -62,6 +62,9 @@
 .v3-page section {
   scroll-margin-top: 84px;
 }
+.v3-page button {
+  cursor: pointer;
+}
 .v3-page :is(a, button, summary, input, select, textarea):focus-visible {
   outline: 2px solid var(--z-accent-text);
   outline-offset: 3px;
@@ -917,41 +920,28 @@
   margin-top: 28px;
 }
 
-/* ---------- Details ---------- */
-.v3-details {
-  max-width: 780px;
-  margin-inline: auto;
-  padding: 40px;
-  border-radius: 32px;
-  background: var(--z-card-muted);
+/* ---------- Apps screen (dashboard capture inside a Zid-style grey stage) ---------- */
+.v3-appStage {
+  padding: 32px;
+  border-radius: 40px;
+  background: var(--z-neutral);
 }
-.v3-details h2 {
-  margin-bottom: 24px;
-  text-align: center;
-  font-size: 26px;
-  font-weight: 700;
+/* The capture ships with its own device bezel on a square black canvas;
+   the radius matches the bezel's outer corner (about 52px on the 2000x1147 source). */
+.v3-appShot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2.6% / 4.53%;
+  box-shadow:
+    0 2px 6px rgb(32 23 81 / 0.08),
+    0 44px 80px -40px rgb(32 23 81 / 0.45);
 }
-.v3-details dl {
-  padding: 6px 24px;
-  border-radius: 24px;
-  background: var(--z-card);
-}
-.v3-details dl > div {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 16px;
-  padding-block: 18px;
-}
-.v3-details dl > div + div {
-  border-top: 1px solid var(--z-line);
-}
-.v3-details dt {
-  font-size: 15px;
-  color: var(--z-muted);
-}
-.v3-details dd {
-  font-size: 15.5px;
-  font-weight: 600;
+@media (max-width: 639px) {
+  .v3-appStage {
+    padding: 10px;
+    border-radius: 24px;
+  }
 }
 
 /* ---------- FAQ ---------- */
@@ -1255,14 +1245,6 @@
   }
   .v3-splitCopy {
     padding: 32px 24px;
-  }
-  .v3-details {
-    padding: 24px 16px;
-    border-radius: 28px;
-  }
-  .v3-details dl > div {
-    grid-template-columns: 1fr;
-    gap: 4px;
   }
   .v3-faq details {
     padding-inline: 18px;
