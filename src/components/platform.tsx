@@ -33,23 +33,25 @@ export function Platform({ t }: { t: Dict["platform"] }) {
 
 /**
  * The five platform cells. `spot-cell` / `spot-dark` are hooks for pages that add a pointer spotlight (v3);
- * `interactive` turns the role permissions into toggles.
+ * `interactive` turns the role permissions into toggles; `brandPreview` picks what the brand colours repaint.
  */
 export function PlatformGrid({
   t,
   interactive = false,
+  brandPreview = "store",
   className = "",
 }: {
   t: Dict["platform"];
   interactive?: boolean;
+  brandPreview?: "store" | "dashboard";
   className?: string;
 }) {
   return (
     <div className={`grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12 ${className}`}>
       {/* Brand + domain: interactive white-label demo */}
-      <Reveal className="spot-cell flex flex-col justify-between gap-8 rounded-[20px] border border-line bg-surface p-6 sm:p-8 md:col-span-2 lg:col-span-7">
+      <Reveal className="spot-cell flex flex-col justify-between gap-8 overflow-hidden rounded-[20px] border border-line bg-surface p-6 sm:p-8 md:col-span-2 lg:col-span-7">
         <CellText title={t.brand.title} body={t.brand.body} />
-        <BrandDemo t={t.brand} />
+        <BrandDemo t={t.brand} preview={brandPreview} />
       </Reveal>
 
       {/* Payments feed */}

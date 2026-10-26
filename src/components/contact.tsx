@@ -2,93 +2,21 @@
 
 import { CaretDown, CheckCircle, CircleNotch, EnvelopeSimple, MapPin, Phone, WarningCircle } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useId } from "react";
 import { contact, type Dict, type Locale } from "@/lib/content";
 import { ForwardArrowClient } from "./arrow-client";
 import { Reveal } from "./reveal";
+import { useDemoRequest, type DemoFields } from "./use-demo-request";
 
-type Fields = { name: string; company: string; phone: string; sector: string; message: string };
-type Errors = Partial<Record<keyof Fields, string>>;
-type Status = "idle" | "sending" | "success" | "error";
+type Fields = DemoFields;
 
 const EASE = [0.23, 1, 0.32, 1] as const;
-
-// Accepts 05XXXXXXXX, 5XXXXXXXX, +9665XXXXXXXX or 009665XXXXXXXX and returns 05XXXXXXXX.
-const normalizePhone = (v: string) => {
-  let d = v.replace(/\D/g, "");
-  if (d.startsWith("00966")) d = d.slice(5);
-  else if (d.startsWith("966")) d = d.slice(3);
-  if (d.length === 9 && d.startsWith("5")) d = `0${d}`;
-  return d;
-};
 
 export function Contact({ t, locale }: { t: Dict["contact"]; locale: Locale }) {
   const f = t.form;
   const id = useId();
   const reduce = useReducedMotion();
-  const empty: Fields = { name: "", company: "", phone: "", sector: "", message: "" };
-  const [values, setValues] = useState<Fields>(empty);
-  const [errors, setErrors] = useState<Errors>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [status, setStatus] = useState<Status>("idle");
-
-  const validate = (v: Fields): Errors => {
-    const e: Errors = {};
-    if (!v.name.trim()) e.name = f.required;
-    if (!v.company.trim()) e.company = f.required;
-    if (!v.phone.trim()) e.phone = f.required;
-    else if (!/^05\d{8}$/.test(normalizePhone(v.phone))) e.phone = f.invalidPhone;
-    if (!v.sector) e.sector = f.required;
-    return e;
-  };
-
-  const set = (k: keyof Fields) => (ev: { target: { value: string } }) => {
-    const next = { ...values, [k]: ev.target.value };
-    setValues(next);
-    if (submitted) setErrors(validate(next));
-  };
-
-  const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
-    ev.preventDefault();
-    setSubmitted(true);
-    const e = validate(values);
-    setErrors(e);
-    if (Object.keys(e).length) {
-      const first = (Object.keys(e) as (keyof Fields)[])[0];
-      document.getElementById(`${id}-${first}`)?.focus();
-      return;
-    }
-    setStatus("sending");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...values, phone: normalizePhone(values.phone) }),
-      });
-      if (!res.ok) throw new Error(String(res.status));
-      setStatus("success");
-    } catch {
-      setStatus("error");
-    }
-  };
-
-  // Focus follows the state swap: success heading on send, first field after "send another".
-  const refocusFirst = useRef(false);
-  const focusOnMount = (el: HTMLElement | null) => el?.focus({ preventScroll: true });
-  const focusFirstAfterReset = (el: HTMLInputElement | null) => {
-    if (el && refocusFirst.current) {
-      refocusFirst.current = false;
-      el.focus({ preventScroll: true });
-    }
-  };
-
-  const reset = () => {
-    refocusFirst.current = true;
-    setValues(empty);
-    setErrors({});
-    setSubmitted(false);
-    setStatus("idle");
-  };
+  const { values, errors, status, set, onSubmit, reset, focusOnMount, focusFirstAfterReset } = useDemoRequest(f, id);
 
   const inputCls = (k: keyof Fields) =>
     `w-full rounded-[12px] border bg-surface px-4 text-[15px] text-ink outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-subtle focus:border-accent focus:shadow-[0_0_0_4px_var(--accent-soft)] ${
@@ -250,10 +178,9 @@ export function Contact({ t, locale }: { t: Dict["contact"]; locale: Locale }) {
                       onChange={set("phone")}
                       aria-required
                       aria-invalid={!!errors.phone}
-                      aria-describedby={describedBy("phone", true)}
+                      aria-describedby={describedBy("phone")}
                       className={`${inputCls("phone")} tabular h-12 ${locale === "ar" ? "text-right" : "text-left"}`}
                     />,
-                    f.phoneHint,
                   )}
                   {field(
                     "sector",

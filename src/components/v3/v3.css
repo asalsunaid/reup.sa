@@ -65,6 +65,13 @@
 .v3-page button {
   cursor: pointer;
 }
+html:has(.v3-page) {
+  scrollbar-color: color-mix(in oklab, var(--ink) 28%, transparent) transparent;
+  accent-color: var(--accent-fill);
+}
+.v3-page {
+  caret-color: var(--z-accent);
+}
 .v3-page :is(a, button, summary, input, select, textarea):focus-visible {
   outline: 2px solid var(--z-accent-text);
   outline-offset: 3px;
@@ -166,7 +173,7 @@
   margin-top: 18px;
 }
 
-/* ---------- Buttons, badges, chips ---------- */
+/* ---------- Buttons ---------- */
 .v3-btn {
   display: inline-flex;
   align-items: center;
@@ -249,31 +256,6 @@
   }
 }
 
-.v3-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 30px;
-  padding-inline: 12px;
-  border-radius: 999px;
-  background: var(--z-solid);
-  color: var(--z-on-solid);
-  font-size: 13px;
-  font-weight: 600;
-}
-.v3-badge svg {
-  color: var(--z-glow-pink);
-}
-[data-theme="dark"] .v3-badge:not(.v3-badge-light) svg {
-  color: var(--z-accent);
-}
-.v3-badge-light {
-  background: rgb(255 255 255 / 0.14);
-  border: 1px solid rgb(255 255 255 / 0.22);
-  color: #fff;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
 /* ---------- Hero ---------- */
 .v3-heroWrap {
   padding: 16px;
@@ -281,77 +263,58 @@
 .v3-hero {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
   max-width: 1440px;
-  min-height: min(720px, calc(100dvh - 140px));
   margin-inline: auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   border-radius: 40px;
-  background: var(--z-dark);
+  background:
+    radial-gradient(60% 75% at 92% 0%, rgb(214 0 90 / 0.28), transparent 70%),
+    radial-gradient(55% 80% at 0% 100%, rgb(91 73 201 / 0.32), transparent 70%), var(--z-dark);
   border: 1px solid var(--z-dark-line);
 }
-/* Oversized by the parallax travel so the photo never shows an edge while it drifts */
-.v3-heroImageLayer {
-  position: absolute;
-  inset: -24px;
-  z-index: -2;
+[dir="ltr"] .v3-hero {
+  background:
+    radial-gradient(60% 75% at 8% 0%, rgb(214 0 90 / 0.28), transparent 70%),
+    radial-gradient(55% 80% at 100% 100%, rgb(91 73 201 / 0.32), transparent 70%), var(--z-dark);
 }
-.v3-heroImage {
-  object-fit: cover;
-}
-.v3-heroFloatsLayer {
-  justify-self: center;
-}
-.v3-heroScrim {
+/* React Bits DotGrid: the field reacts to the pointer and ripples on click. The card stays unclipped so
+   the activity cards can overhang it, so the field carries the rounded clip itself. */
+.v3-heroDots {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(to top, rgb(28 20 71 / 0.55), transparent 45%),
-    linear-gradient(to left, rgb(28 20 71 / 0.95) 0%, rgb(28 20 71 / 0.84) 45%, rgb(28 20 71 / 0.5) 100%);
-}
-[dir="ltr"] .v3-heroScrim {
-  background: linear-gradient(to top, rgb(28 20 71 / 0.55), transparent 45%),
-    linear-gradient(to right, rgb(28 20 71 / 0.95) 0%, rgb(28 20 71 / 0.84) 45%, rgb(28 20 71 / 0.5) 100%);
-}
-.v3-heroInner {
-  width: 100%;
-  max-width: 1200px;
-  margin-inline: auto;
-  padding: 72px 48px;
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 40px;
-  align-items: center;
+  overflow: hidden;
+  border-radius: inherit;
 }
 .v3-heroCopy {
+  max-width: 880px;
+  padding: 88px 24px 0;
+  text-align: center;
   color: #fff;
-  max-width: 600px;
-}
-/* Transforms need a box: the badge wrapper is inline by default */
-.v3-heroCopy > span.rise {
-  display: inline-block;
 }
 .v3-hero h1 {
-  margin-top: 22px;
-  font-size: clamp(40px, 5vw, 64px);
-  line-height: 1.28;
+  font-size: clamp(40px, 4.6vw, 62px);
+  line-height: 1.3;
   font-weight: 700;
+  text-wrap: balance;
 }
+/* Inline blocks: each half gets a box for the staggered rise, and both share a line when they fit */
 .v3-hero h1 > span {
-  display: block;
+  display: inline-block;
 }
 .v3-heroAccent {
   color: var(--z-glow-pink);
 }
 [dir="ltr"] .v3-hero h1 {
-  font-size: clamp(40px, 4.6vw, 60px);
+  font-size: clamp(40px, 4.4vw, 60px);
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
 .v3-heroCopy > p {
-  margin-top: 20px;
-  max-width: 470px;
+  margin: 20px auto 0;
+  max-width: 620px;
   font-size: 18px;
   line-height: 1.85;
   color: rgb(255 255 255 / 0.84);
@@ -365,43 +328,56 @@
 .v3-actions-center {
   justify-content: center;
 }
-.v3-heroFloats {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-  animation: rise-scale 1100ms var(--ease-out) 420ms both;
-}
-.v3-domainPill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  height: 40px;
-  padding-inline: 16px;
-  margin-bottom: 6px;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 0.12);
-  border: 1px solid rgb(255 255 255 / 0.22);
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-.v3-livePing {
+/* The product rises out of the card's bottom edge, flat and centred under the copy */
+.v3-heroStage {
   position: relative;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--z-glow-pink);
+  width: min(74%, 940px);
+  margin-top: 64px;
 }
-.v3-livePing::after {
+/* Soft raspberry light behind the top of the screen */
+.v3-heroStage::before {
   content: "";
   position: absolute;
+  z-index: -1;
+  inset: -36px 12% auto;
+  height: 180px;
+  border-radius: 999px;
+  background: rgb(214 0 90 / 0.3);
+  filter: blur(80px);
+}
+/* Shows the top 64% of the 2960x1698 screenshot; the cut lines up with the card's bottom edge */
+.v3-heroScreen {
+  overflow: hidden;
+  aspect-ratio: 2960 / 1080;
+}
+.v3-heroScreen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.v3-heroFloats {
+  position: absolute;
   inset: 0;
-  border-radius: inherit;
-  background: inherit;
-  animation: v3-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  animation: rise-scale 1100ms var(--ease-out) 560ms both;
+}
+.v3-heroFloats .v3-floatCard {
+  position: absolute;
+  min-width: 250px;
+  pointer-events: auto;
+}
+/* Two cards hang off the screen's end edge, one off its start corner and over the card's bottom edge */
+.v3-heroFloats [data-kind="contract"] {
+  top: -6%;
+  inset-inline-end: -7%;
+}
+.v3-heroFloats [data-kind="invoice"] {
+  top: 54%;
+  inset-inline-end: -10%;
+}
+.v3-heroFloats [data-kind="calendar"] {
+  bottom: -30px;
+  inset-inline-start: -8%;
 }
 .v3-floatCard {
   display: flex;
@@ -418,13 +394,6 @@
 }
 [dir="rtl"] .v3-floatCard {
   padding: 14px 14px 14px 18px;
-}
-/* Children: domain pill, then three cards; offset the 2nd and 3rd card for an organic stack */
-.v3-heroFloats .v3-floatCard:nth-of-type(3) {
-  margin-inline-start: 56px;
-}
-.v3-heroFloats .v3-floatCard:nth-of-type(4) {
-  margin-inline-start: 20px;
 }
 .v3-floatCard b {
   display: block;
@@ -457,13 +426,6 @@
   }
   to {
     transform: translateY(-10px);
-  }
-}
-@keyframes v3-ping {
-  75%,
-  100% {
-    transform: scale(2.4);
-    opacity: 0;
   }
 }
 
@@ -531,9 +493,6 @@
 .v3-band-neutral {
   background: var(--z-neutral);
 }
-.v3-band-tight {
-  padding-top: 0;
-}
 .v3-band-flush {
   padding-top: 0;
 }
@@ -571,6 +530,28 @@
 }
 .v3-card-muted {
   background: var(--z-card-muted);
+}
+
+/* ---------- Entrance ---------- */
+/* Content renders visible; browsers with view timelines let cards settle in as they scroll up */
+@keyframes v3-settle {
+  from {
+    opacity: 0.35;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .v3-in {
+      animation: v3-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 55%;
+    }
+  }
 }
 
 /* ---------- Micro-interactions ---------- */
@@ -777,67 +758,6 @@
   color: var(--z-muted);
 }
 
-/* ---------- Promo band ---------- */
-.v3-promo {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: 72px 56px;
-  border-radius: 40px;
-  background: var(--z-dark);
-  border: 1px solid var(--z-dark-line);
-  color: #fff;
-}
-.v3-promo::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: -180px;
-  inset-inline-end: -120px;
-  width: 460px;
-  height: 460px;
-  border-radius: 999px;
-  background: rgb(214 0 90 / 0.32);
-  filter: blur(90px);
-}
-.v3-promo h2 {
-  margin-top: 18px;
-  font-size: clamp(28px, 3.4vw, 40px);
-  line-height: 1.38;
-  font-weight: 700;
-}
-.v3-promo > p {
-  margin-top: 12px;
-  max-width: 560px;
-  font-size: 17px;
-  line-height: 1.8;
-  color: rgb(255 255 255 / 0.78);
-}
-.v3-promoRow {
-  margin-top: 36px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 28px 36px;
-  border-radius: 32px;
-  background: var(--z-dark-2);
-}
-.v3-promoRow strong {
-  display: block;
-  font-size: clamp(30px, 3.6vw, 44px);
-  line-height: 1.2;
-  font-weight: 700;
-  color: var(--z-glow-pink);
-}
-.v3-promoRow span {
-  display: block;
-  margin-top: 6px;
-  font-size: 15px;
-  color: rgb(255 255 255 / 0.82);
-}
-
 /* ---------- Numbers ---------- */
 .v3-numberGrid {
   display: grid;
@@ -861,34 +781,125 @@
   font-weight: 700;
   color: var(--z-accent-text);
 }
-.v3-quote {
-  margin-top: 24px;
+/* ---------- Testimonials deck ---------- */
+.v3-deck {
+  margin: 40px auto 0;
+  max-width: 780px;
+}
+/* Every card shares one grid cell, so the stage is as tall as the longest quote and they all match */
+.v3-deckStage {
+  display: grid;
+  padding-bottom: 36px;
+}
+.v3-deckCard {
+  grid-area: 1 / 1;
+  margin: 0;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px 40px;
-  padding: 26px 30px;
-  border-radius: 24px;
+  flex-direction: column;
+  gap: 20px;
+  padding: 36px 40px;
+  border-radius: 32px;
+  background: var(--z-card);
   border: 1px solid var(--z-line);
+  box-shadow:
+    0 1px 2px rgb(32 23 81 / 0.05),
+    0 24px 48px -28px rgb(32 23 81 / 0.35);
+  transition: background-color 400ms var(--ease-out);
+  will-change: transform;
 }
-.v3-quote > p {
-  max-width: 760px;
-  font-size: 17px;
-  line-height: 1.85;
-  font-weight: 500;
+.v3-deckCard[data-pos="0"] {
+  cursor: grab;
 }
-.v3-quote > p span {
+.v3-deckCard[data-pos="0"]:active {
+  cursor: grabbing;
+}
+/* Cards further back pick up the lilac, so the stack reads as layers even where only an edge shows */
+.v3-deckCard[data-pos="1"] {
+  background: color-mix(in oklab, var(--z-card) 55%, var(--z-lilac));
+}
+.v3-deckCard[data-pos="2"],
+.v3-deckCard[data-pos="3"] {
+  background: var(--z-lilac);
+}
+.v3-deckMark {
   color: var(--z-accent-text);
 }
-.v3-quoteBy {
+[dir="rtl"] .v3-deckMark {
+  scale: -1 1;
+}
+.v3-deckCard blockquote {
+  margin: 0;
+  flex: 1;
+  font-size: clamp(18px, 1.9vw, 21px);
+  line-height: 1.85;
+  font-weight: 500;
+  text-wrap: pretty;
+}
+.v3-deckCard blockquote span {
+  color: var(--z-accent-text);
+}
+.v3-deckCard figcaption {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.v3-deckAvatar {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: var(--z-lilac);
+  color: var(--z-lilac-ink);
+  font-size: 18px;
+  font-weight: 700;
+}
+.v3-deckCard figcaption b {
+  display: block;
+  font-size: 16px;
+}
+.v3-deckCard figcaption small {
+  display: block;
+  margin-top: 2px;
   font-size: 14px;
   color: var(--z-muted);
 }
-.v3-quoteBy b {
-  display: block;
-  font-size: 15px;
-  color: var(--z-ink);
+/* Dots: a 24px hit area each, the active one stretched into a pill */
+.v3-deckDots {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+.v3-deckDots button {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 999px;
+}
+.v3-deckDots button::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--z-ink) 22%, transparent);
+  transition:
+    width 300ms var(--ease-out),
+    background-color 300ms var(--ease-out);
+}
+.v3-deckDots button[aria-current="true"]::before {
+  width: 26px;
+  background: var(--z-accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .v3-deckDots button:not([aria-current="true"]):hover::before {
+    background: color-mix(in oklab, var(--z-ink) 45%, transparent);
+  }
 }
 
 /* ---------- Team split ---------- */
@@ -964,6 +975,15 @@
   width: 100%;
   height: auto;
   filter: drop-shadow(0 2px 4px rgb(32 23 81 / 0.1)) drop-shadow(0 30px 40px rgb(32 23 81 / 0.22));
+}
+/* Video has no alpha: round it to the device bezel (about 50px on 1920) and use a cheap box-shadow */
+.v3-appVideo {
+  border-radius: 2.6% / 4.53%;
+  background: #fff;
+  filter: none;
+  box-shadow:
+    0 2px 4px rgb(32 23 81 / 0.1),
+    0 34px 60px -28px rgb(32 23 81 / 0.42);
 }
 @media (max-width: 639px) {
   .v3-appStage {
@@ -1073,11 +1093,365 @@
   color: rgb(255 255 255 / 0.82);
 }
 
-/* ---------- Contact + footer ---------- */
-.v3-contact {
-  padding-top: 96px;
-  background: var(--z-bg);
+/* ---------- Contact (v3 form) ---------- */
+.v3-contactBand {
+  overflow-x: clip;
 }
+.v3-contactGrid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 56px;
+  align-items: start;
+}
+.v3-contactIntro {
+  position: sticky;
+  top: 112px;
+}
+.v3-contactIntro h2 {
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.3;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.v3-contactIntro > p {
+  max-width: 30rem;
+  margin-top: 14px;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--z-muted);
+}
+.v3-contactWays {
+  display: grid;
+  gap: 6px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.v3-contactWays li {
+  display: flex;
+}
+.v3-contactWays a,
+.v3-contactWays li:not(:has(a)) {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  margin-inline-start: -10px;
+  border-radius: 18px;
+  font-size: 15.5px;
+  font-weight: 600;
+  transition: background-color 200ms ease;
+}
+.v3-contactWays small {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--z-muted);
+}
+.v3-wayIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--z-neutral);
+  color: var(--z-ink);
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+.v3-formCard {
+  position: relative;
+  padding: 36px;
+  border-radius: 32px;
+  background: var(--z-neutral);
+}
+.v3-form {
+  display: grid;
+  gap: 22px;
+}
+.v3-sectors {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.v3-sectors legend {
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+.v3-chips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.v3-sectorChip {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--z-line);
+  background: var(--z-card);
+  color: var(--z-ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: pointer;
+  transition:
+    color 200ms ease,
+    border-color 200ms ease,
+    transform 160ms var(--ease-out);
+}
+.v3-sectorChip:active {
+  transform: scale(0.97);
+}
+/* Native radio stays in the tab order and arrow-key group; only its box is hidden */
+.v3-sectorChip input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.v3-sectorChip:has(input:focus-visible) {
+  outline: 2px solid var(--z-accent-text);
+  outline-offset: 2px;
+}
+.v3-sectorChip svg {
+  flex-shrink: 0;
+  color: var(--z-muted);
+  transition: color 200ms ease;
+}
+.v3-sectorChip[data-checked] {
+  border-color: transparent;
+  color: var(--z-on-solid);
+}
+.v3-sectorChip[data-checked] svg {
+  color: var(--z-on-solid);
+}
+.v3-chipGlide {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--z-solid);
+}
+.v3-sectors[data-invalid] .v3-sectorChip:not([data-checked]) {
+  border-color: color-mix(in oklab, var(--z-accent) 45%, var(--z-line));
+}
+.v3-fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.v3-field {
+  display: grid;
+  /* minmax(0, 1fr): the input's intrinsic width must not set the column's minimum */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+}
+.v3-field > label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.v3-inputWrap,
+.v3-textarea {
+  border-radius: 16px;
+  border: 1.5px solid transparent;
+  background: var(--z-card);
+  box-shadow: inset 0 0 0 1px var(--z-line);
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+.v3-inputWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 54px;
+  padding-inline: 16px;
+}
+.v3-inputWrap:focus-within,
+.v3-textarea:focus {
+  border-color: var(--z-accent-text);
+  box-shadow: 0 0 0 4px rgb(214 0 90 / 0.12);
+}
+.v3-field[data-invalid] .v3-inputWrap {
+  border-color: var(--z-accent);
+}
+.v3-inputIcon {
+  display: grid;
+  color: var(--z-muted);
+  transition: color 200ms ease;
+}
+.v3-inputWrap:focus-within .v3-inputIcon {
+  color: var(--z-accent-text);
+}
+/* 16px keeps iOS from zooming the page on focus */
+.v3-inputWrap input,
+.v3-textarea {
+  font-size: 16px;
+  color: var(--z-ink);
+  outline: none;
+}
+.v3-inputWrap input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
+.v3-prefix {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline-end: 12px;
+  border-inline-end: 1px solid var(--z-line);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--z-ink);
+}
+.v3-prefix svg {
+  color: var(--z-muted);
+}
+.v3-phoneWrap input {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+.v3-fieldError {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--z-accent-text);
+}
+.v3-note {
+  display: grid;
+  gap: 6px;
+}
+.v3-noteToggle {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 2px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--z-ink);
+  transition: color 200ms ease;
+}
+.v3-noteToggle span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--z-muted);
+}
+
+.v3-textarea {
+  display: block;
+  /* Inset by the focus-ring width so the clipping accordion never cuts the ring, and nothing peeks out when closed */
+  width: calc(100% - 8px);
+  margin: 4px;
+  min-height: 104px;
+  padding: 14px 16px;
+  line-height: 1.7;
+  resize: vertical;
+}
+.v3-formAlert {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--z-blush);
+  color: var(--z-blush-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+.v3-submit {
+  width: 100%;
+  height: 56px;
+}
+.v3-submit:disabled {
+  opacity: 0.85;
+  cursor: progress;
+}
+.v3-privacy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: -8px !important;
+  font-size: 13px;
+  color: var(--z-muted);
+}
+.v3-formDone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 480px;
+  text-align: center;
+}
+.v3-doneMark {
+  width: 76px;
+  height: 76px;
+}
+.v3-doneMark circle {
+  fill: var(--z-accent);
+}
+.v3-doneMark path {
+  fill: none;
+  stroke: #fffafc;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.v3-formDone h3 {
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  outline: none;
+}
+.v3-formDone p {
+  max-width: 22rem;
+  line-height: 1.8;
+  color: var(--z-muted);
+}
+.v3-formDone .v3-btn {
+  margin-top: 12px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .v3-contactWays a:hover {
+    background: var(--z-neutral);
+  }
+  .v3-contactWays a:hover .v3-wayIcon {
+    background: var(--z-accent);
+    color: #fffafc;
+  }
+  .v3-sectorChip:not([data-checked]):hover {
+    border-color: var(--z-ink);
+  }
+  .v3-sectorChip:not([data-checked]):hover svg {
+    color: var(--z-ink);
+  }
+  .v3-noteToggle:hover {
+    color: var(--z-accent-text);
+  }
+}
+
 .v3-footer {
   margin: 0 16px 16px;
   padding-top: 72px;
@@ -1147,16 +1521,29 @@
   .v3-mobileNav {
     display: flex;
   }
-  .v3-heroInner {
+  .v3-heroCopy {
+    padding-top: 72px;
+  }
+  .v3-heroStage {
+    width: 86%;
+    margin-top: 48px;
+  }
+  .v3-heroFloats .v3-floatCard {
+    min-width: 0;
+  }
+  .v3-heroFloats [data-kind="contract"],
+  .v3-heroFloats [data-kind="invoice"] {
+    inset-inline-end: -5%;
+  }
+  .v3-heroFloats [data-kind="calendar"] {
+    inset-inline-start: -4%;
+  }
+  .v3-contactGrid {
     grid-template-columns: 1fr;
-    padding: 64px 32px;
+    gap: 36px;
   }
-  .v3-heroFloatsLayer {
-    display: none;
-  }
-  .v3-heroScrim,
-  [dir="ltr"] .v3-heroScrim {
-    background: linear-gradient(180deg, rgb(28 20 71 / 0.82), rgb(28 20 71 / 0.9));
+  .v3-contactIntro {
+    position: static;
   }
   .v3-splitGrid {
     grid-template-columns: 1fr;
@@ -1178,6 +1565,58 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+/* Phones: the screen keeps its full width and runs further down to the card's edge, and the activity
+   cards shrink to small badges that frame it rather than cover it */
+@media (max-width: 767px) {
+  .v3-heroStage {
+    width: calc(100% - 20px);
+    margin-top: 40px;
+  }
+  .v3-heroScreen {
+    aspect-ratio: 2960 / 1600;
+  }
+  .v3-heroFloats .v3-floatCard {
+    gap: 6px;
+    padding: 5px 9px 5px 5px;
+    border-radius: 11px;
+    box-shadow: 0 10px 22px -10px rgb(8 4 36 / 0.55);
+  }
+  [dir="rtl"] .v3-heroFloats .v3-floatCard {
+    padding: 5px 5px 5px 9px;
+  }
+  .v3-heroFloats .v3-floatIcon {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+  }
+  .v3-heroFloats .v3-floatIcon svg,
+  .v3-heroFloats .v3-floatCheck {
+    width: 12px;
+    height: 12px;
+  }
+  .v3-heroFloats .v3-floatCard b {
+    font-size: 10.5px;
+    line-height: 1.4;
+  }
+  .v3-heroFloats .v3-floatCard small {
+    margin-top: 0;
+    font-size: 9px;
+    line-height: 1.4;
+  }
+  /* Kept to the screen's edges: one straddles the top, one the end side, one the card's bottom edge */
+  .v3-heroFloats [data-kind="contract"] {
+    top: -9%;
+    inset-inline-end: 4%;
+  }
+  .v3-heroFloats [data-kind="invoice"] {
+    top: 50%;
+    inset-inline-end: -1%;
+  }
+  .v3-heroFloats [data-kind="calendar"] {
+    bottom: -14px;
+    inset-inline-start: 3%;
+  }
+}
 @media (max-width: 639px) {
   .v3-container {
     padding-inline: 20px;
@@ -1185,12 +1624,8 @@
   .v3-band {
     padding-block: 64px;
   }
-  .v3-band-tight,
   .v3-band-flush {
     padding-top: 0;
-  }
-  .v3-contact {
-    padding-top: 64px;
   }
   .v3-headerInner {
     padding-inline: 16px;
@@ -1200,6 +1635,16 @@
   }
   .v3-heroWrap {
     padding: 8px;
+  }
+  .v3-formCard {
+    padding: 20px;
+    border-radius: 28px;
+  }
+  .v3-chips {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .v3-fieldRow {
+    grid-template-columns: 1fr;
   }
   .v3-partners {
     padding: 36px 0 44px;
@@ -1218,13 +1663,12 @@
   }
   .v3-hero {
     border-radius: 28px;
-    min-height: 0;
   }
-  .v3-heroInner {
-    padding: 52px 22px 44px;
+  .v3-heroCopy {
+    padding: 44px 20px 0;
   }
   .v3-hero h1 {
-    font-size: 38px;
+    font-size: 36px;
   }
   .v3-heroCopy > p {
     font-size: 16.5px;
@@ -1254,15 +1698,9 @@
     min-width: 82px;
     font-size: 13px;
   }
-  .v3-promo {
-    padding: 44px 22px;
+  .v3-deckCard {
+    padding: 28px 24px;
     border-radius: 28px;
-  }
-  .v3-promoRow {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 24px;
-    border-radius: 24px;
   }
   .v3-splitMedia {
     min-height: 380px;
@@ -1316,8 +1754,7 @@
     rotate: none !important;
     scale: none !important;
   }
-  .v3-floatCard,
-  .v3-livePing::after {
+  .v3-floatCard {
     animation: none;
   }
   .v3-heroFloats {

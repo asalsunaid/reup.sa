@@ -15,21 +15,22 @@ import {
   Receipt,
   RocketLaunch,
   Signature,
-  Sparkle,
   TrendUp,
   Wallet,
 } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { contact, getDict, partners, type Locale } from "@/lib/content";
-import { Contact } from "../contact";
 import { CountUp } from "../count-up";
+import DotGrid from "../bits/DotGrid";
 import { Logo } from "../logo";
 import { PlatformGrid } from "../platform";
-import { Reveal } from "../reveal";
+import { V3Contact } from "./contact";
 import { getV3 } from "./content";
 import { V3Header } from "./header";
-import { ParallaxLayer, ParallaxScope, SpotlightGroup, TiltScreen } from "./interactions";
+import { SpotlightGroup, TiltScreen } from "./interactions";
+import { ModulesVideo } from "./modules-video";
+import { Testimonials } from "./testimonials";
 
 export function v3Metadata(locale: Locale): Metadata {
   return {
@@ -44,21 +45,11 @@ const floatIcons = { contract: Signature, calendar: CalendarCheck, invoice: Rece
 const audienceIcons = { start: RocketLaunch, grow: TrendUp, move: ArrowsLeftRight } as const;
 const productIcons = { propup: Buildings, medup: FirstAidKit, fiup: Wallet, cxup: ChatsCircle, einvoice: Receipt } as const;
 
-function Badge({ children, tone = "dark" }: { children: React.ReactNode; tone?: "dark" | "light" }) {
-  return (
-    <span className={`v3-badge ${tone === "light" ? "v3-badge-light" : ""}`}>
-      <Sparkle size={13} weight="fill" aria-hidden />
-      {children}
-    </span>
-  );
-}
-
 export function V3Landing({ locale }: { locale: Locale }) {
   const ar = locale === "ar";
   const t = getDict(locale);
   const v = getV3(locale);
   const Forward = ar ? ArrowLeft : ArrowRight;
-  const [open, close] = ar ? ["«", "»"] : ["“", "”"];
 
   return (
     <div className="v3-page">
@@ -70,66 +61,79 @@ export function V3Landing({ locale }: { locale: Locale }) {
 
       <SpotlightGroup>
         <main id="main">
-          {/* Hero: inset dark card over photography, like Zid's campaign hero */}
+          {/* Hero: centred copy on the dark card, with the product rising out of its bottom edge */}
           <section id="top" className="v3-heroWrap">
-            <ParallaxScope className="v3-hero">
-              <ParallaxLayer depth={-16} className="v3-heroImageLayer">
-                <Image src={v.hero.image} alt={v.hero.alt} fill preload sizes="100vw" className="v3-heroImage" />
-              </ParallaxLayer>
-              <div className="v3-heroScrim" aria-hidden />
-              <div className="v3-heroInner">
-                <div className="v3-heroCopy">
-                  <span className="rise" style={{ "--i": 0 } as React.CSSProperties}>
-                    <Badge tone="light">{v.hero.badge}</Badge>
-                  </span>
-                  <h1>
-                    <span className="rise" style={{ "--i": 1 } as React.CSSProperties}>
-                      {v.hero.titleA}
-                    </span>
-                    <span className="rise v3-heroAccent" style={{ "--i": 2 } as React.CSSProperties}>
-                      {v.hero.titleB}
-                    </span>
-                  </h1>
-                  <p className="rise" style={{ "--i": 3 } as React.CSSProperties}>
-                    {v.hero.sub}
-                  </p>
-                  <div className="v3-actions rise" style={{ "--i": 4 } as React.CSSProperties}>
-                    <a href="#contact" className="v3-btn v3-btn-primary">
-                      {v.cta}
-                      <Forward size={18} weight="bold" aria-hidden />
-                    </a>
-                    <a href="#solutions" className="v3-btn v3-btn-glass">
-                      {v.explore}
-                    </a>
-                  </div>
-                </div>
-
-                {/* Live-feeling activity cards; decorative, so hidden from assistive tech */}
-                <ParallaxLayer depth={26} className="v3-heroFloatsLayer">
-                  <div className="v3-heroFloats" aria-hidden>
-                    <div className="v3-domainPill">
-                      <span className="v3-livePing" />
-                      <span dir="ltr">{v.offer.domain}</span>
-                    </div>
-                    {v.hero.floats.map((f, i) => {
-                      const Icon = floatIcons[f.kind as keyof typeof floatIcons];
-                      return (
-                        <div key={f.title} className="v3-floatCard" style={{ "--f": i } as React.CSSProperties}>
-                          <span className="v3-floatIcon">
-                            <Icon size={18} weight="bold" />
-                          </span>
-                          <span>
-                            <b>{f.title}</b>
-                            <small dir="auto">{f.body}</small>
-                          </span>
-                          <CheckCircle size={18} weight="fill" className="v3-floatCheck" />
-                        </div>
-                      );
-                    })}
-                  </div>
-                </ParallaxLayer>
+            <div className="v3-hero">
+              <div className="v3-heroDots" aria-hidden>
+                <DotGrid
+                  dotSize={3}
+                  gap={22}
+                  baseColor="#4b3fa0"
+                  activeColor="#ff8fbd"
+                  proximity={130}
+                  glow={0.6}
+                  swell={0.6}
+                  fade={0.6}
+                  opacity={0.9}
+                  shockRadius={260}
+                />
               </div>
-            </ParallaxScope>
+              <div className="v3-heroCopy">
+                <h1>
+                  <span className="rise" style={{ "--i": 1 } as React.CSSProperties}>
+                    {v.hero.titleA}
+                  </span>{" "}
+                  <span className="rise v3-heroAccent" style={{ "--i": 2 } as React.CSSProperties}>
+                    {v.hero.titleB}
+                  </span>
+                </h1>
+                <p className="rise" style={{ "--i": 3 } as React.CSSProperties}>
+                  {v.hero.sub}
+                </p>
+                <div className="v3-actions v3-actions-center rise" style={{ "--i": 4 } as React.CSSProperties}>
+                  <a href="#contact" className="v3-btn v3-btn-primary">
+                    {v.cta}
+                    <Forward size={18} weight="bold" aria-hidden />
+                  </a>
+                  <a href="#solutions" className="v3-btn v3-btn-glass">
+                    {v.explore}
+                  </a>
+                </div>
+              </div>
+
+              <div className="v3-heroStage rise-scale">
+                {/* Clips the screen at the card's bottom edge; the activity cards sit outside it and may overhang */}
+                <div className="v3-heroScreen">
+                  <Image
+                    src={v.hero.image}
+                    alt={v.hero.alt}
+                    width={2960}
+                    height={1698}
+                    preload
+                    quality={90}
+                    sizes="(min-width: 1280px) 960px, 92vw"
+                  />
+                </div>
+                {/* Live-feeling activity cards; decorative, so hidden from assistive tech */}
+                <div className="v3-heroFloats" aria-hidden>
+                  {v.hero.floats.map((f, i) => {
+                    const Icon = floatIcons[f.kind as keyof typeof floatIcons];
+                    return (
+                      <div key={f.title} className="v3-floatCard" data-kind={f.kind} style={{ "--f": i } as React.CSSProperties}>
+                        <span className="v3-floatIcon">
+                          <Icon size={18} weight="bold" />
+                        </span>
+                        <span>
+                          <b>{f.title}</b>
+                          <small dir="auto">{f.body}</small>
+                        </span>
+                        <CheckCircle size={18} weight="fill" className="v3-floatCheck" />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </section>
 
           <section className="v3-partners" aria-label={v.partners}>
@@ -161,27 +165,30 @@ export function V3Landing({ locale }: { locale: Locale }) {
           {/* Offer: the platform grid shared with v1, with live toggles and a pointer spotlight */}
           <section id="offer" className="v3-band v3-band-neutral">
             <div className="v3-container v3-bento">
-              <Reveal className="v3-head v3-head-center">
+              <div className="v3-head v3-head-center">
                 <h2>{v.offer.title}</h2>
                 <p>{v.offer.sub}</p>
-              </Reveal>
-              <PlatformGrid t={{ ...t.platform, roles: { ...t.platform.roles, title: v.offer.rolesTitle } }} interactive />
+              </div>
+              <PlatformGrid
+                t={{ ...t.platform, roles: { ...t.platform.roles, title: v.offer.rolesTitle } }}
+                interactive
+                brandPreview="dashboard"
+              />
             </div>
           </section>
 
           {/* Audience: three paths, Zid's "new / existing / switching" pattern */}
           <section id="audience" className="v3-band">
             <div className="v3-container">
-              <Reveal className="v3-head v3-head-center">
-                <Badge>{v.audience.badge}</Badge>
+              <div className="v3-head v3-head-center">
                 <h2>{v.audience.title}</h2>
                 <p>{v.audience.sub}</p>
-              </Reveal>
+              </div>
               <div className="v3-audienceGrid">
-                {v.audience.items.map((it, i) => {
+                {v.audience.items.map((it) => {
                   const Icon = audienceIcons[it.icon as keyof typeof audienceIcons];
                   return (
-                    <Reveal key={it.title} delay={i * 0.07} className="spot-cell v3-lift v3-card v3-card-muted v3-audienceCard">
+                    <div key={it.title} className="v3-in spot-cell v3-lift v3-card v3-card-muted v3-audienceCard">
                       <span className="v3-iconTile">
                         <Icon size={24} weight="duotone" aria-hidden />
                       </span>
@@ -190,7 +197,7 @@ export function V3Landing({ locale }: { locale: Locale }) {
                       <a href={it.href} className="v3-btn v3-btn-outline">
                         {it.cta}
                       </a>
-                    </Reveal>
+                    </div>
                   );
                 })}
               </div>
@@ -200,15 +207,15 @@ export function V3Landing({ locale }: { locale: Locale }) {
           {/* Solutions: tier-style cards with chip rows */}
           <section id="solutions" className="v3-band v3-band-neutral">
             <div className="v3-container">
-              <Reveal className="v3-head v3-head-center">
+              <div className="v3-head v3-head-center">
                 <h2>{v.solutions.title}</h2>
                 <p>{v.solutions.sub}</p>
-              </Reveal>
+              </div>
               <div className="v3-solutionGrid">
-                {v.solutions.items.map((it, i) => {
+                {v.solutions.items.map((it) => {
                   const Icon = productIcons[it.key as keyof typeof productIcons];
                   return (
-                    <Reveal key={it.key} delay={(i % 3) * 0.06} className="spot-cell v3-lift v3-card v3-solutionCard">
+                    <div key={it.key} className="v3-in spot-cell v3-lift v3-card v3-solutionCard">
                       <div className="v3-solutionHead">
                         <span className="v3-iconTile v3-iconTile-accent">
                           <Icon size={22} weight="duotone" aria-hidden />
@@ -229,7 +236,7 @@ export function V3Landing({ locale }: { locale: Locale }) {
                           </li>
                         ))}
                       </ul>
-                    </Reveal>
+                    </div>
                   );
                 })}
               </div>
@@ -237,61 +244,30 @@ export function V3Landing({ locale }: { locale: Locale }) {
             </div>
           </section>
 
-          {/* Dark promo band, the campaign moment of the page */}
+          {/* Numbers: Zid's calculator cards, filled with REUP's real figures */}
           <section className="v3-band">
             <div className="v3-container">
-              <Reveal className="spot-cell spot-dark v3-promo">
-                <Badge tone="light">{v.promo.badge}</Badge>
-                <h2>{v.promo.title}</h2>
-                <p>{v.promo.sub}</p>
-                <div className="v3-promoRow">
-                  <div>
-                    <strong>{v.promo.big}</strong>
-                    <span>{v.promo.bigNote}</span>
-                  </div>
-                  <a href="#contact" className="v3-btn v3-btn-primary">
-                    {v.cta}
-                    <Forward size={18} weight="bold" aria-hidden />
-                  </a>
-                </div>
-              </Reveal>
-            </div>
-          </section>
-
-          {/* Numbers: Zid's calculator cards, filled with REUP's real figures */}
-          <section className="v3-band v3-band-tight">
-            <div className="v3-container">
-              <Reveal className="v3-head v3-head-center">
+              <div className="v3-head v3-head-center">
                 <h2>{v.numbers.title}</h2>
-              </Reveal>
+              </div>
               <div className="v3-numberGrid">
-                {[t.impact.stats[1], t.impact.stats[0], t.impact.stats[2]].map((s, i) => (
-                  <Reveal key={s.label} delay={i * 0.06} className="spot-cell v3-lift v3-card v3-card-muted v3-numberCard">
+                {[t.impact.stats[1], t.impact.stats[0], t.impact.stats[2]].map((s) => (
+                  <div key={s.label} className="v3-in spot-cell v3-lift v3-card v3-card-muted v3-numberCard">
                     <small>{s.label}</small>
                     <strong>
                       <CountUp value={s.value} prefix={s.prefix} suffix={s.suffix} />
                     </strong>
-                  </Reveal>
+                  </div>
                 ))}
               </div>
-              <Reveal className="v3-quote">
-                <p>
-                  <span aria-hidden>{open}</span>
-                  {v.numbers.quote}
-                  <span aria-hidden>{close}</span>
-                </p>
-                <span className="v3-quoteBy">
-                  <b>{t.impact.author}</b>
-                  {t.impact.role}
-                </span>
-              </Reveal>
+              <Testimonials t={v.testimonials} locale={locale} />
             </div>
           </section>
 
           {/* Team split: image card with floating cards + copy card */}
           <section className="v3-band v3-band-neutral">
             <div className="v3-container v3-splitGrid">
-              <Reveal className="v3-splitMedia">
+              <div className="v3-in v3-splitMedia">
                 <div className="v3-splitPhoto">
                   <Image src={v.team.image} alt={v.team.alt} fill sizes="(min-width: 1024px) 560px, 100vw" />
                 </div>
@@ -311,50 +287,40 @@ export function V3Landing({ locale }: { locale: Locale }) {
                     </span>
                   </div>
                 ))}
-              </Reveal>
-              <Reveal delay={0.08} className="spot-cell v3-card v3-splitCopy">
-                <Badge>{v.team.badge}</Badge>
+              </div>
+              <div className="v3-in spot-cell v3-card v3-splitCopy">
                 <h2>{v.team.title}</h2>
                 <p>{v.team.body}</p>
                 <a href="#contact" className="v3-btn v3-btn-primary">
                   {v.cta}
                   <Forward size={18} weight="bold" aria-hidden />
                 </a>
-              </Reveal>
+              </div>
             </div>
           </section>
 
           {/* Apps screen: a real capture of the dashboard, so visitors see modules being switched on */}
           <section id="apps" className="v3-band">
             <div className="v3-container">
-              <Reveal className="v3-head v3-head-center">
+              <div className="v3-head v3-head-center">
                 <h2>{v.apps.title}</h2>
                 <p>{v.apps.sub}</p>
-              </Reveal>
-              <Reveal className="v3-appStage">
+              </div>
+              <div className="v3-in v3-appStage">
                 <TiltScreen className="v3-appTilt">
-                  <Image
-                    src={v.apps.image}
-                    alt={v.apps.imageAlt}
-                    width={2960}
-                    height={1698}
-                    quality={90}
-                    sizes="(min-width: 1200px) 1088px, calc(100vw - 56px)"
-                    className="v3-appShot"
-                  />
+                  <ModulesVideo src={v.apps.video} poster={v.apps.image} label={v.apps.imageAlt} width={1920} height={1102} />
                 </TiltScreen>
-              </Reveal>
+              </div>
             </div>
           </section>
 
           {/* FAQ: native disclosure, works without JS */}
           <section id="faq" className="v3-band v3-band-neutral">
             <div className="v3-container v3-faqWrap">
-              <Reveal className="v3-head v3-head-center">
-                <Badge>{v.faq.badge}</Badge>
+              <div className="v3-head v3-head-center">
                 <h2>{v.faq.title}</h2>
-              </Reveal>
-              <Reveal className="v3-faq">
+              </div>
+              <div className="v3-in v3-faq">
                 {t.faq.items.map((item, i) => (
                   <details key={item.q} name="v3-faq" open={i === 0}>
                     <summary>
@@ -366,7 +332,7 @@ export function V3Landing({ locale }: { locale: Locale }) {
                     <p>{item.a}</p>
                   </details>
                 ))}
-              </Reveal>
+              </div>
             </div>
           </section>
 
@@ -376,7 +342,7 @@ export function V3Landing({ locale }: { locale: Locale }) {
               <div className="spot-cell spot-dark v3-final">
                 <Image src={v.final.image} alt="" fill sizes="(min-width: 1280px) 1200px, 100vw" className="v3-finalImage" />
                 <div className="v3-finalScrim" aria-hidden />
-                <Reveal className="v3-finalCopy">
+                <div className="v3-in v3-finalCopy">
                   <h2>{v.final.title}</h2>
                   <p>{v.final.sub}</p>
                   <div className="v3-actions v3-actions-center">
@@ -385,14 +351,12 @@ export function V3Landing({ locale }: { locale: Locale }) {
                       <Forward size={18} weight="bold" aria-hidden />
                     </a>
                   </div>
-                </Reveal>
+                </div>
               </div>
             </div>
           </section>
 
-          <div className="v3-contact">
-            <Contact t={t.contact} locale={locale} />
-          </div>
+          <V3Contact t={t.contact} v={v} locale={locale} />
         </main>
       </SpotlightGroup>
 

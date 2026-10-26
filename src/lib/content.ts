@@ -21,7 +21,7 @@ export type ProductKey = "propup" | "medup" | "fiup" | "cxup" | "einvoice";
 
 const ar = {
   meta: {
-    title: "REUP | منصة أعمال متعددة المستأجرين",
+    title: "REUP | منصة أعمال سعودية لإدارة منشأتك",
     description:
       "REUP تمنح كل منشأة مساحتها الرقمية الخاصة: عقارات، عيادات، تمويل، تجربة عملاء، وفوترة إلكترونية من لوحة تحكم واحدة.",
   },
@@ -48,7 +48,7 @@ const ar = {
   },
   preview: {
     label: "عرض توضيحي لمساحات عملاء REUP",
-    switcher: "بدّل بين المستأجرين",
+    switcher: "بدّل بين المنشآت",
     nav: ["الرئيسية", "العملاء", "الفواتير", "التقارير", "الإعدادات"],
     greeting: "صباح الخير",
     chartTitle: "الإيرادات، آخر 12 أسبوعاً",
@@ -119,7 +119,7 @@ const ar = {
   },
   platform: {
     title: "كل منشأة، مساحتها الخاصة.",
-    sub: "بنية متعددة المستأجرين: لكل عميل نطاقه وهويته وبياناته المعزولة، وكلها تُدار من منصة واحدة.",
+    sub: "لكل منشأة مساحتها الخاصة: نطاقها وهويتها وبياناتها المحمية، وكلها من منصة واحدة.",
     brand: {
       title: "هويتك ونطاقك",
       body: "شعارك وألوانك ونطاق فرعي أو نطاقك الخاص. عملاؤك يرون علامتك أنت.",
@@ -166,9 +166,9 @@ const ar = {
       ],
     },
     security: {
-      title: "بيانات معزولة وآمنة",
-      body: "بيانات كل مستأجر منفصلة تماماً عن غيره.",
-      points: ["عزل كامل لكل مستأجر", "تشفير أثناء النقل والتخزين", "سجل تدقيق لكل عملية"],
+      title: "بياناتك خاصة فيك",
+      body: "بيانات منشأتك محمية ومنفصلة، ولا يطّلع عليها إلا فريقك.",
+      points: ["مساحة خاصة لكل منشأة", "تشفير أثناء النقل والتخزين", "سجل تدقيق لكل عملية"],
     },
   },
   solutions: {
@@ -276,12 +276,12 @@ const ar = {
     moreLink: "راسلنا",
     items: [
       {
-        q: "ما المقصود بمنصة متعددة المستأجرين؟",
-        a: "كل منشأة تحصل على مساحة مستقلة بنطاقها وهويتها وبياناتها، بينما نتولى نحن البنية التحتية والتحديثات والأمان لكل المساحات من منصة واحدة.",
+        q: "هل بيانات منشأتي خاصة ومحمية؟",
+        a: "نعم. لكل منشأة مساحة خاصة بها، وبياناتها منفصلة تماماً عن غيرها ومشفّرة، ونتولى نحن الأمان والتحديثات بدلاً عنك.",
       },
       {
-        q: "هل بيانات منشأتي معزولة عن غيرها؟",
-        a: "نعم. بيانات كل مستأجر معزولة ومشفرة، ولا يصل إليها إلا من تمنحه الصلاحية من فريقك.",
+        q: "من يستطيع الاطلاع على بياناتي؟",
+        a: "فريقك فقط، وبحسب الصلاحيات التي تحددها لكل شخص: المالك يرى كل شيء، والمحاسب يرى الفواتير والتقارير، والاستقبال يرى المواعيد.",
       },
       {
         q: "هل يمكنني استخدام نطاقي الخاص؟",
@@ -308,7 +308,6 @@ const ar = {
       name: "الاسم الكامل",
       company: "اسم المنشأة",
       phone: "رقم الجوال",
-      phoneHint: "مثال: 0555240039",
       sector: "القطاع",
       sectorPlaceholder: "اختر القطاع",
       sectors: ["العقارات", "الرعاية الصحية", "التمويل", "تجربة العملاء", "الفوترة الإلكترونية", "قطاع آخر"],
@@ -325,7 +324,7 @@ const ar = {
     },
   },
   footer: {
-    tagline: "منصة أعمال سعودية متعددة المستأجرين.",
+    tagline: "منصة أعمال سعودية تجمع حلول منشأتك في مكان واحد.",
     groups: [
       {
         title: "الحلول",
@@ -340,7 +339,7 @@ const ar = {
       {
         title: "المنصة",
         links: [
-          { label: "مساحات المستأجرين", href: "#platform" },
+          { label: "مساحتك الخاصة", href: "#platform" },
           { label: "كيف تبدأ", href: "#how" },
           { label: "الأسئلة الشائعة", href: "#faq" },
         ],
@@ -355,7 +354,7 @@ export type Dict = typeof ar;
 
 const en: Dict = {
   meta: {
-    title: "REUP | Multi-tenant business platform",
+    title: "REUP | A Saudi platform to run your business",
     description:
       "REUP gives every business its own digital workspace: real estate, clinics, finance, customer experience and e-invoicing, run from one dashboard.",
   },
@@ -381,8 +380,8 @@ const en: Dict = {
     secondary: "Explore solutions",
   },
   preview: {
-    label: "Interactive preview of REUP tenant workspaces",
-    switcher: "Switch tenant",
+    label: "Interactive preview of REUP business workspaces",
+    switcher: "Switch business",
     nav: ["Home", "Customers", "Invoices", "Reports", "Settings"],
     greeting: "Good morning",
     chartTitle: "Revenue, last 12 weeks",
@@ -453,7 +452,7 @@ const en: Dict = {
   },
   platform: {
     title: "Every business gets its own space.",
-    sub: "A multi-tenant core: each customer has its own domain, brand and isolated data, all run from one platform.",
+    sub: "Every business gets its own private space: its own domain, brand and protected data, all run from one platform.",
     brand: {
       title: "Your brand, your domain",
       body: "Your logo, your colors, a subdomain or your own domain. Customers only ever see your brand.",
@@ -500,9 +499,9 @@ const en: Dict = {
       ],
     },
     security: {
-      title: "Isolated, secure data",
-      body: "Every tenant's data is fully separated from every other tenant.",
-      points: ["Full isolation per tenant", "Encrypted in transit and at rest", "Audit log for every action"],
+      title: "Your data stays yours",
+      body: "Your business data is protected and kept separate. Only your team can see it.",
+      points: ["A private space for every business", "Encrypted in transit and at rest", "Audit log for every action"],
     },
   },
   solutions: {
@@ -611,12 +610,12 @@ const en: Dict = {
     moreLink: "Email us",
     items: [
       {
-        q: "What does multi-tenant mean?",
-        a: "Every business gets an independent space with its own domain, brand and data, while we run the infrastructure, updates and security for all spaces from one platform.",
+        q: "Is my business data private and protected?",
+        a: "Yes. Every business gets its own private space. Its data is fully separated from others and encrypted, and we handle security and updates for you.",
       },
       {
-        q: "Is my business data isolated from others?",
-        a: "Yes. Each tenant's data is isolated and encrypted, and only people you grant access to on your team can reach it.",
+        q: "Who can see my data?",
+        a: "Only your team, based on the permissions you set for each person: the owner sees everything, the accountant sees invoices and reports, and the front desk sees appointments.",
       },
       {
         q: "Can I use my own domain?",
@@ -643,7 +642,6 @@ const en: Dict = {
       name: "Full name",
       company: "Business name",
       phone: "Mobile number",
-      phoneHint: "Example: 0555240039",
       sector: "Sector",
       sectorPlaceholder: "Choose a sector",
       sectors: ["Real estate", "Healthcare", "Finance", "Customer experience", "E-invoicing", "Other"],
@@ -660,7 +658,7 @@ const en: Dict = {
     },
   },
   footer: {
-    tagline: "A Saudi multi-tenant business platform.",
+    tagline: "A Saudi business platform that brings your solutions together in one place.",
     groups: [
       {
         title: "Solutions",
@@ -675,7 +673,7 @@ const en: Dict = {
       {
         title: "Platform",
         links: [
-          { label: "Tenant workspaces", href: "#platform" },
+          { label: "Your private space", href: "#platform" },
           { label: "How it works", href: "#how" },
           { label: "FAQ", href: "#faq" },
         ],
