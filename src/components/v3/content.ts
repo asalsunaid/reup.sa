@@ -1,0 +1,349 @@
+import type { Locale } from "@/lib/content";
+
+const IMG = "https://reup.sa/images";
+
+// v3 copy follows Zid's voice: short, warm, lightly Saudi in Arabic. Shared strings (nav, FAQ, contact) stay in lib/content.
+const ar = {
+  meta: { title: "REUP | كل أعمالك في مساحة وحدة" },
+  announce: { text: "احجز عرضاً مخصصاً لقطاعك، ونوريك REUP على أرض الواقع", link: "احجز عرضك" },
+  cta: "احجز عرضك",
+  explore: "شوف الحلول",
+  nav: [
+    { href: "#offer", label: "المنصة" },
+    { href: "#solutions", label: "الحلول" },
+    { href: "#audience", label: "لمين REUP؟" },
+    { href: "#faq", label: "الأسئلة" },
+  ],
+  hero: {
+    badge: "منصة أعمال سعودية",
+    titleA: "كل أعمالك،",
+    titleB: "في مساحة وحدة.",
+    sub: "عقار، عيادة، تمويل، أو فوترة إلكترونية. REUP تجمعها لك في مساحة تحمل اسمك وهويتك.",
+    image: `${IMG}/solution-ehya.webp`,
+    alt: "فلل سكنية حديثة",
+    floats: [
+      { kind: "contract", title: "عقد إيجار موقّع", body: "فيلا 14، حي الشاطئ" },
+      { kind: "calendar", title: "موعد جديد", body: "الأحد 10:30 ص" },
+      { kind: "invoice", title: "فاتورة ضريبية صادرة", body: "INV-2026-0418" },
+    ],
+  },
+  partners: "شركاء يشتغلون معنا",
+  offer: {
+    title: "مساحة وحدة، وحلول تكمّل بعض",
+    sub: "كل منشأة تاخذ مساحتها الخاصة، وتفعّل الحلول اللي تحتاجها بس.",
+    space: {
+      chip: "مساحتك الخاصة",
+      title: "نطاقك وهويتك من أول يوم",
+      body: "شعارك وألوانك على نطاق فرعي، واربط نطاقك الخاص متى ما حبيت.",
+      domain: "alreem.reup.sa",
+    },
+    suite: {
+      chip: "حلول جاهزة",
+      title: "فعّل اللي تحتاجه بس",
+      items: [
+        { q: "عندك عقارات؟", a: "PropUp يدير العقود والتحصيل والصيانة." },
+        { q: "عندك عيادة؟", a: "MedUp للمواعيد وملفات المرضى والتأمين." },
+      ],
+      note: "وكل الحلول تشتغل مع بعض في نفس المساحة.",
+    },
+  },
+  audience: {
+    badge: "لمين REUP؟",
+    title: "توك تبدأ، شغّال، أو تبي تنقل… مساحتك جاهزة",
+    sub: "رتّبنا لك الطريق حسب وضع منشأتك.",
+    items: [
+      {
+        icon: "start",
+        title: "توك تبدأ؟",
+        body: "اختر الحل اللي يناسب نشاطك، ونجهّز مساحتك ونمشي معك خطوة بخطوة.",
+        cta: "اختر حلك",
+        href: "#solutions",
+      },
+      {
+        icon: "grow",
+        title: "عندك منشأة قائمة؟",
+        body: "اجمع فروعك وفريقك وعملياتك في مكان واحد، بدون ما توقف شغلك.",
+        cta: "شوف المنصة",
+        href: "#offer",
+      },
+      {
+        icon: "move",
+        title: "تشتغل على نظام ثاني؟",
+        body: "نساعدك تنقل بياناتك وتبدأ على REUP بأقل مجهود.",
+        cta: "احجز عرضك",
+        href: "#contact",
+      },
+    ],
+  },
+  solutions: {
+    title: "حل جاهز لكل قطاع",
+    sub: "اختر حلك، وكل حل يجيك بأدواته جاهزة من أول يوم.",
+    note: "كل الحلول تشتغل في نفس المساحة وبنفس الحساب.",
+    items: [
+      {
+        key: "propup",
+        name: "PropUp",
+        sector: "العقارات",
+        rows: [
+          ["العقود", "عقود إيجار إلكترونية"],
+          ["التحصيل", "تذكير وتحصيل تلقائي"],
+          ["الصيانة", "طلبات ومتابعة لحظية"],
+        ],
+      },
+      {
+        key: "medup",
+        name: "MedUp",
+        sector: "الرعاية الصحية",
+        rows: [
+          ["المواعيد", "حجز أونلاين"],
+          ["المرضى", "ملفات موحدة"],
+          ["التأمين", "إدارة المطالبات"],
+        ],
+      },
+      {
+        key: "fiup",
+        name: "FiUp",
+        sector: "التمويل",
+        rows: [
+          ["الطلبات", "طلبات تمويل رقمية"],
+          ["المحفظة", "تقييم ومتابعة"],
+          ["التقارير", "أرقام لحظية"],
+        ],
+      },
+      {
+        key: "cxup",
+        name: "CxUp",
+        sector: "تجربة العملاء",
+        rows: [
+          ["المحادثات", "صندوق وارد موحد"],
+          ["التذاكر", "مستويات خدمة واضحة"],
+          ["الرضا", "استبيانات وقياس"],
+        ],
+      },
+      {
+        key: "einvoice",
+        name: "الفوترة الإلكترونية",
+        sector: "الامتثال الضريبي",
+        rows: [
+          ["فاتورة", "المرحلة الثانية"],
+          ["QR", "رمز وتوقيع إلكتروني"],
+          ["الأرشيف", "تقارير ضريبية"],
+        ],
+      },
+    ],
+  },
+  promo: {
+    badge: "الفوترة الإلكترونية",
+    title: "فواتيرك متوافقة من أول فاتورة",
+    sub: "كل عملية في مساحتك تطلع لها فاتورة ضريبية جاهزة، بدون إدخال يدوي.",
+    big: "المرحلة الثانية",
+    bigNote: "ربط وتكامل مع منصة فاتورة",
+  },
+  numbers: {
+    title: "أرقام نفتخر فيها",
+    quote: "مع REUP بسّطنا العمليات وقلّلنا الجهد اليدوي، وصارت عندنا رؤية لحظية تساعدنا نتخذ قرارات أفضل.",
+  },
+  team: {
+    badge: "مو لحالك",
+    title: "ما نسلّمك النظام ونمشي.",
+    body: "فريق REUP يجهّز مساحتك معك، ويدرّب فريقك، ويكون قريب منك بعد الإطلاق.",
+    image: `${IMG}/impact-team.png`,
+    alt: "فريق REUP في اجتماع مع عميل",
+    floats: [
+      { title: "تذكرة مغلقة", body: "تقييم العميل 5 من 5" },
+      { title: "تم تفعيل MedUp", body: "عيادات سنا" },
+    ],
+  },
+  details: {
+    title: "تفاصيل المنصة",
+    rows: [
+      ["النطاق", "نطاق فرعي على reup.sa أو نطاقك الخاص"],
+      ["الحلول", "PropUp و MedUp و FiUp و CxUp والفوترة الإلكترونية"],
+      ["الصلاحيات", "أدوار للمالك والمحاسب والاستقبال"],
+      ["البيانات", "معزولة لكل منشأة ومشفرة"],
+      ["اللغة", "عربي وإنجليزي بالكامل"],
+    ],
+  },
+  faq: { badge: "أسئلة متكررة", title: "كل اللي يشغل بالك." },
+  final: {
+    title: "خلّ أعمالك تشتغل لك",
+    sub: "مساحة وحدة، فريق واحد، وصورة كاملة لكل شيء.",
+    image: `${IMG}/mission-section.png`,
+  },
+  footer: { platform: "المنصة", connect: "تواصل معنا" },
+};
+
+export type V3Dict = typeof ar;
+
+const en: V3Dict = {
+  meta: { title: "REUP | Your whole business, one space" },
+  announce: { text: "Book a demo tailored to your sector and see REUP in action", link: "Book a demo" },
+  cta: "Book a demo",
+  explore: "See solutions",
+  nav: [
+    { href: "#offer", label: "Platform" },
+    { href: "#solutions", label: "Solutions" },
+    { href: "#audience", label: "Who it's for" },
+    { href: "#faq", label: "FAQ" },
+  ],
+  hero: {
+    badge: "A Saudi business platform",
+    titleA: "Your whole business,",
+    titleB: "in one space.",
+    sub: "Property, clinics, finance or e-invoicing. REUP brings it together in a space with your name and brand.",
+    image: `${IMG}/solution-ehya.webp`,
+    alt: "Modern residential villas",
+    floats: [
+      { kind: "contract", title: "Lease signed", body: "Villa 14, Al Shati" },
+      { kind: "calendar", title: "New booking", body: "Sunday 10:30 AM" },
+      { kind: "invoice", title: "Tax invoice issued", body: "INV-2026-0418" },
+    ],
+  },
+  partners: "Partners we work with",
+  offer: {
+    title: "One space, solutions that fit together",
+    sub: "Every business gets its own space and switches on only what it needs.",
+    space: {
+      chip: "Your own space",
+      title: "Your domain and brand from day one",
+      body: "Your logo and colors on a subdomain, and connect your own domain whenever you like.",
+      domain: "alreem.reup.sa",
+    },
+    suite: {
+      chip: "Ready-made solutions",
+      title: "Switch on only what you need",
+      items: [
+        { q: "Own property?", a: "PropUp runs leases, collection and maintenance." },
+        { q: "Run a clinic?", a: "MedUp handles bookings, patient files and insurance." },
+      ],
+      note: "And every solution works together in the same space.",
+    },
+  },
+  audience: {
+    badge: "Who it's for",
+    title: "Starting out, already running, or switching? Your space is ready",
+    sub: "We mapped the path for wherever your business is today.",
+    items: [
+      {
+        icon: "start",
+        title: "Just starting?",
+        body: "Pick the solution that fits your business. We set up your space and walk with you step by step.",
+        cta: "Pick a solution",
+        href: "#solutions",
+      },
+      {
+        icon: "grow",
+        title: "Already operating?",
+        body: "Bring branches, team and operations into one place without pausing your work.",
+        cta: "See the platform",
+        href: "#offer",
+      },
+      {
+        icon: "move",
+        title: "On another system?",
+        body: "We help you move your data and get started on REUP with minimal effort.",
+        cta: "Book a demo",
+        href: "#contact",
+      },
+    ],
+  },
+  solutions: {
+    title: "A ready solution for every sector",
+    sub: "Pick your solution. Each one arrives with its tools ready from day one.",
+    note: "Every solution runs in the same space, on the same account.",
+    items: [
+      {
+        key: "propup",
+        name: "PropUp",
+        sector: "Real estate",
+        rows: [
+          ["Leases", "Digital lease contracts"],
+          ["Collection", "Automatic reminders"],
+          ["Maintenance", "Requests and tracking"],
+        ],
+      },
+      {
+        key: "medup",
+        name: "MedUp",
+        sector: "Healthcare",
+        rows: [
+          ["Bookings", "Online booking"],
+          ["Patients", "Unified records"],
+          ["Insurance", "Claims management"],
+        ],
+      },
+      {
+        key: "fiup",
+        name: "FiUp",
+        sector: "Finance",
+        rows: [
+          ["Requests", "Digital applications"],
+          ["Portfolio", "Assessment and tracking"],
+          ["Reports", "Real-time numbers"],
+        ],
+      },
+      {
+        key: "cxup",
+        name: "CxUp",
+        sector: "Customer experience",
+        rows: [
+          ["Chats", "One unified inbox"],
+          ["Tickets", "Clear service levels"],
+          ["Satisfaction", "Surveys and scores"],
+        ],
+      },
+      {
+        key: "einvoice",
+        name: "E-invoicing",
+        sector: "Tax compliance",
+        rows: [
+          ["FATOORA", "Phase 2"],
+          ["QR", "Code and cryptographic stamp"],
+          ["Archive", "Tax reports"],
+        ],
+      },
+    ],
+  },
+  promo: {
+    badge: "E-invoicing",
+    title: "Compliant from your very first invoice",
+    sub: "Every transaction in your space gets a ready tax invoice, with no manual entry.",
+    big: "Phase 2",
+    bigNote: "Integrated with ZATCA's FATOORA",
+  },
+  numbers: {
+    title: "Numbers we're proud of",
+    quote:
+      "With REUP, we streamline processes, reduce manual effort, and get real-time insights that help us make better decisions.",
+  },
+  team: {
+    badge: "You're not alone",
+    title: "We don't hand over the keys and leave.",
+    body: "The REUP team sets up your space with you, trains your people and stays close after launch.",
+    image: `${IMG}/impact-team.png`,
+    alt: "The REUP team meeting a customer",
+    floats: [
+      { title: "Ticket resolved", body: "Rated 5 out of 5" },
+      { title: "MedUp activated", body: "Sana Clinics" },
+    ],
+  },
+  details: {
+    title: "Platform details",
+    rows: [
+      ["Domain", "A reup.sa subdomain or your own domain"],
+      ["Solutions", "PropUp, MedUp, FiUp, CxUp and E-invoicing"],
+      ["Permissions", "Roles for owner, accountant and front desk"],
+      ["Data", "Isolated per business and encrypted"],
+      ["Language", "Fully Arabic and English"],
+    ],
+  },
+  faq: { badge: "FAQ", title: "Everything on your mind." },
+  final: {
+    title: "Let your business work for you",
+    sub: "One space, one team, and the full picture of everything.",
+    image: `${IMG}/mission-section.png`,
+  },
+  footer: { platform: "Platform", connect: "Get in touch" },
+};
+
+export const getV3 = (locale: Locale) => (locale === "ar" ? ar : en);
