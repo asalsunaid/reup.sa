@@ -1,26 +1,413 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+  REUP design tokens.
+  Brand: indigo #201751 (ink) + raspberry #D6005A (single accent).
+  Radius rule: interactive controls are full pills, surfaces are 20px (28px for hero-scale media), inputs are 12px.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f6f5fa;
+  --surface: #fefeff;
+  --surface-2: #efedf6;
+  --surface-3: #e6e3f0;
+  --ink: #201751;
+  --muted: #5b5576;
+  --subtle: #6a6583;
+  --line: rgb(32 23 81 / 0.09);
+  --line-strong: rgb(32 23 81 / 0.16);
+  /* `accent` colors text, icons and strokes; `accent-fill` sits behind white text (buttons, monograms). */
+  --accent: #c4005a;
+  --accent-hover: #a8004c;
+  --accent-fill: #d6005a;
+  --accent-fill-hover: #bd004f;
+  --accent-soft: rgb(214 0 90 / 0.08);
+  --on-accent: #fffafc;
+  --indigo: #201751;
+  --indigo-2: #2b2066;
+  --on-indigo: #f4f2fb;
+  --shadow-sm: 0 1px 2px rgb(32 23 81 / 0.05), 0 1px 1px rgb(32 23 81 / 0.03);
+  --shadow-card: 0 1px 2px rgb(32 23 81 / 0.04), 0 8px 24px -10px rgb(32 23 81 / 0.12), 0 28px 64px -28px rgb(32 23 81 / 0.18);
+  --shadow-float: 0 2px 6px rgb(32 23 81 / 0.06), 0 18px 40px -12px rgb(32 23 81 / 0.22);
+  --ring: rgb(214 0 90 / 0.35);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root[data-theme="dark"] {
+  --bg: #0b0920;
+  --surface: #13102f;
+  --surface-2: #1a163c;
+  --surface-3: #241f4b;
+  --ink: #f3f1fa;
+  --muted: #aaa4c6;
+  --subtle: #8a84a8;
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.15);
+  /* Brighter raspberry for text on dark, while fills keep the brand value so white labels stay above 4.5:1. */
+  --accent: #ff4f94;
+  --accent-hover: #ff70a8;
+  --accent-fill: #d6005a;
+  --accent-fill-hover: #e0136b;
+  --accent-soft: rgb(255 79 148 / 0.12);
+  --on-accent: #fffafc;
+  --indigo: #1d1748;
+  --indigo-2: #282061;
+  --on-indigo: #f4f2fb;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 12px 32px -12px rgb(0 0 0 / 0.5), 0 32px 72px -32px rgb(0 0 0 / 0.6);
+  --shadow-float: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 20px 44px -14px rgb(0 0 0 / 0.6);
+  --ring: rgb(240 40 124 / 0.45);
+  color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme]) {
+    --bg: #0b0920;
+    --surface: #13102f;
+    --surface-2: #1a163c;
+    --surface-3: #241f4b;
+    --ink: #f3f1fa;
+    --muted: #aaa4c6;
+    --subtle: #8a84a8;
+    --line: rgb(255 255 255 / 0.08);
+    --line-strong: rgb(255 255 255 / 0.15);
+    /* Brighter raspberry for text on dark, while fills keep the brand value so white labels stay above 4.5:1. */
+    --accent: #ff4f94;
+    --accent-hover: #ff70a8;
+    --accent-fill: #d6005a;
+    --accent-fill-hover: #e0136b;
+    --accent-soft: rgb(255 79 148 / 0.12);
+    --on-accent: #fffafc;
+    --indigo: #1d1748;
+    --indigo-2: #282061;
+    --on-indigo: #f4f2fb;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+    --shadow-card: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 12px 32px -12px rgb(0 0 0 / 0.5), 0 32px 72px -32px rgb(0 0 0 / 0.6);
+    --shadow-float: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 20px 44px -14px rgb(0 0 0 / 0.6);
+    --ring: rgb(240 40 124 / 0.45);
+    color-scheme: dark;
   }
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-fill-hover: var(--accent-fill-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-indigo: var(--indigo);
+  --color-indigo-2: var(--indigo-2);
+  --color-on-indigo: var(--on-indigo);
+  --font-sans: var(--font-plex-arabic), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --shadow-card: var(--shadow-card);
+  --shadow-float: var(--shadow-float);
+  --shadow-soft: var(--shadow-sm);
+  --ease-out-strong: var(--ease-out);
+  --ease-in-out-strong: var(--ease-in-out);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "kern";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--accent-fill);
+  color: var(--on-accent);
+}
+
+/* Latin display type gets tightened; Arabic never takes letter-spacing because it breaks joining. */
+:lang(en) .display {
+  letter-spacing: -0.028em;
+}
+:lang(en) .display-tight {
+  letter-spacing: -0.02em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Layered so component shapes and `outline-none` on inputs with their own focus ring still win. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 3rem;
+    padding-inline: 1.375rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.975rem;
+    white-space: nowrap;
+    user-select: none;
+    transition:
+      transform 160ms var(--ease-out),
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease,
+      box-shadow 200ms ease;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-primary {
+    background: var(--accent-fill);
+    color: var(--on-accent);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.22) inset,
+      0 1px 2px rgb(214 0 90 / 0.25),
+      0 8px 20px -8px rgb(214 0 90 / 0.55);
+  }
+  .btn-ghost {
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line-strong);
+  }
+  .btn-sm {
+    height: 2.5rem;
+    padding-inline: 1.125rem;
+    font-size: 0.9rem;
+  }
+  /* Narrow phones: keep the hero's two CTAs on one row */
+  @media (max-width: 400px) {
+    .btn:not(.btn-sm) {
+      padding-inline: 1.05rem;
+      font-size: 0.94rem;
+    }
+  }
+  .btn .btn-arrow {
+    transition: transform 200ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover {
+      background: var(--accent-fill-hover);
+    }
+    .btn-ghost:hover {
+      border-color: var(--ink);
+    }
+    /* Arrows are mirrored in RTL via the `scale` property, so one positive nudge reads "forward" in both directions. */
+    .btn:hover .btn-arrow,
+    .link-arrow:hover .btn-arrow {
+      transform: translateX(3px);
+    }
+  }
+}
+
+/* ---------- Hero load-in (CSS so it runs off the main thread during hydration) ---------- */
+/* Entrances start at 0.001 rather than 0: Chrome skips fully transparent nodes for LCP,
+   so a true 0 would push LCP to the end of the stagger instead of first paint. */
+@keyframes rise {
+  from {
+    opacity: 0.001;
+    transform: translateY(14px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+@keyframes rise-scale {
+  from {
+    opacity: 0.001;
+    transform: translateY(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.rise {
+  animation: rise 900ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 80ms + 60ms);
+}
+.rise-scale {
+  animation: rise-scale 1100ms var(--ease-out) both;
+  animation-delay: 260ms;
+}
+
+/* Auto-advance timer on the tenant switcher: constant progress, so linear. */
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- Ambient hero glow: slow, decorative, off under reduced motion ---------- */
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-6%, 8%, 0) scale(1.18);
+  }
+}
+.hero-glow {
+  animation: drift 26s ease-in-out infinite alternate;
+}
+.hero-glow-2 {
+  animation: drift 32s ease-in-out -9s infinite alternate-reverse;
+}
+
+/* ---------- Partner marquee (constant motion, so linear) ---------- */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee {
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee-track {
+  animation: marquee 48s linear infinite;
+}
+/* Arabic reads right to left, so the strip travels toward the reading start. */
+:lang(ar) .marquee-track {
+  animation-direction: reverse;
+}
+@media (hover: hover) and (pointer: fine) {
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+.partner-logo {
+  filter: brightness(0);
+  opacity: 0.5;
+  transition: opacity 200ms ease;
+}
+.partner-logo:hover {
+  opacity: 0.85;
+}
+.partner-logo[data-opaque] {
+  filter: grayscale(1) contrast(2.2);
+  mix-blend-mode: multiply;
+}
+:root[data-theme="dark"] .partner-logo {
+  filter: brightness(0) invert(1);
+  opacity: 0.55;
+}
+:root[data-theme="dark"] .partner-logo[data-opaque] {
+  filter: grayscale(1) contrast(2.2) invert(1);
+  mix-blend-mode: screen;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .partner-logo {
+    filter: brightness(0) invert(1);
+    opacity: 0.55;
+  }
+  :root:not([data-theme]) .partner-logo[data-opaque] {
+    filter: grayscale(1) contrast(2.2) invert(1);
+    mix-blend-mode: screen;
+  }
+}
+
+/* ---------- Accordion (grid-rows technique, no height measuring) ---------- */
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms var(--ease-out);
+}
+.accordion-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.accordion-panel > div {
+  overflow: hidden;
+}
+
+/* Fixed grain layer: lives on a fixed pseudo-element so scrolling never repaints it. */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rise,
+  .rise-scale {
+    animation: fade 300ms ease both;
+  }
+  .hero-glow,
+  .hero-glow-2,
+  .marquee-track {
+    animation: none;
+  }
+  .marquee-track {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .marquee-track > [aria-hidden="true"],
+  .marquee-set > li:nth-child(n + 6) {
+    display: none;
+  }
+  .marquee {
+    mask-image: none;
+  }
+  .btn,
+  .btn:active {
+    transform: none;
+  }
+  .accordion-panel {
+    transition: none;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -1,0 +1,1771 @@
+/* REUP v3: campaign-style landing modelled on Zid's layout system, in REUP's indigo + raspberry.
+   Radius scale: page-level containers 40px, cards 32px, inner cards 24px, chips 12px, buttons and badges full pill.
+   Bands alternate white and neutral at 96px vertical rhythm. Header is the only sticky layer (z 40). */
+.v3-page {
+  --z-bg: #fefeff;
+  --z-neutral: #f4f3f8;
+  --z-card: #fefeff;
+  --z-card-muted: #f4f3f8;
+  --z-ink: #201751;
+  --z-muted: #5f5980;
+  --z-line: #e6e3ee;
+  --z-solid: #201751;
+  --z-on-solid: #fefeff;
+  --z-accent: #d6005a;
+  --z-accent-hover: #bd004f;
+  --z-accent-text: #c4005a;
+  --z-blush: #ffe3ef;
+  --z-blush-ink: #9c0042;
+  --z-lilac: #ebe7ff;
+  --z-lilac-ink: #3f2db0;
+  --z-dark: #1c1447;
+  --z-dark-2: #2a2066;
+  --z-dark-line: transparent;
+  --z-glow-pink: #ff9cc6;
+  color: var(--z-ink);
+  background: var(--z-bg);
+  overflow: clip;
+  interpolate-size: allow-keywords;
+}
+[data-theme="dark"] .v3-page {
+  --z-bg: #0c0920;
+  --z-neutral: #110d29;
+  --z-card: #18133a;
+  --z-card-muted: #1e1844;
+  --z-ink: #f3f1fa;
+  --z-muted: #aea8c9;
+  --z-line: rgb(255 255 255 / 0.09);
+  --z-solid: #f3f1fa;
+  --z-on-solid: #1c1447;
+  --z-accent-text: #ff6aa5;
+  --z-blush: #3a1430;
+  --z-blush-ink: #ffb3d1;
+  --z-lilac: #262057;
+  --z-lilac-ink: #d0c7ff;
+  --z-dark: #171139;
+  --z-dark-2: #241c58;
+  --z-dark-line: rgb(255 255 255 / 0.08);
+}
+
+.v3-page h1,
+.v3-page h2,
+.v3-page h3,
+.v3-page p,
+.v3-page dl,
+.v3-page dd {
+  margin: 0;
+}
+.v3-page a {
+  color: inherit;
+  text-decoration: none;
+}
+.v3-page section {
+  scroll-margin-top: 84px;
+}
+.v3-page button {
+  cursor: pointer;
+}
+html:has(.v3-page) {
+  scrollbar-color: color-mix(in oklab, var(--ink) 28%, transparent) transparent;
+  accent-color: var(--accent-fill);
+}
+.v3-page {
+  caret-color: var(--z-accent);
+}
+.v3-page :is(a, button, summary, input, select, textarea):focus-visible {
+  outline: 2px solid var(--z-accent-text);
+  outline-offset: 3px;
+}
+.v3-container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+.v3-skip {
+  position: fixed;
+  top: -100px;
+  inset-inline-start: 16px;
+  z-index: 70;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--z-solid);
+  color: var(--z-on-solid) !important;
+}
+.v3-skip:focus {
+  top: 12px;
+}
+
+/* ---------- Header ---------- */
+.v3-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in oklab, var(--z-bg) 86%, transparent);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid var(--z-line);
+}
+.v3-headerInner {
+  max-width: 1248px;
+  height: 72px;
+  margin-inline: auto;
+  padding-inline: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.v3-brand {
+  display: flex;
+  padding-block: 8px;
+}
+.v3-desktopNav {
+  display: flex;
+  gap: 2px;
+}
+.v3-desktopNav a,
+.v3-lang {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 200ms ease;
+}
+.v3-lang {
+  font-weight: 600;
+  padding-inline: 12px;
+}
+.v3-headerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.v3-menuButton {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--z-line);
+  color: var(--z-ink);
+  transition: transform 160ms var(--ease-out);
+}
+.v3-menuButton:active {
+  transform: scale(0.95);
+}
+.v3-mobileNav {
+  display: none;
+  flex-direction: column;
+  padding: 4px 20px 20px;
+  border-top: 1px solid var(--z-line);
+  background: var(--z-bg);
+}
+.v3-mobileNav > a {
+  padding: 14px 4px;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--z-line);
+}
+.v3-mobileActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* ---------- Buttons ---------- */
+.v3-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 54px;
+  padding-inline: 32px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    transform 160ms var(--ease-out),
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+.v3-btn:active {
+  transform: scale(0.97);
+}
+.v3-btn svg {
+  transition: transform 200ms var(--ease-out);
+}
+.v3-btn-sm {
+  height: 44px;
+  padding-inline: 22px;
+  font-size: 14.5px;
+}
+.v3-btn-primary {
+  background: var(--z-accent);
+  color: #fffafc !important;
+}
+.v3-btn-dark {
+  background: var(--z-solid);
+  color: var(--z-on-solid) !important;
+}
+.v3-btn-outline {
+  border: 1.5px solid var(--z-ink);
+  color: var(--z-ink);
+}
+.v3-btn-glass {
+  background: rgb(255 255 255 / 0.12);
+  border: 1px solid rgb(255 255 255 / 0.24);
+  color: #fff !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.v3-btn-light {
+  background: #fefeff;
+  color: #1c1447 !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  .v3-desktopNav a:hover,
+  .v3-lang:hover {
+    background: var(--z-neutral);
+  }
+  .v3-btn-primary:hover {
+    background: var(--z-accent-hover);
+  }
+  .v3-btn-dark:hover {
+    background: color-mix(in oklab, var(--z-solid) 86%, var(--z-bg));
+  }
+  .v3-btn-outline:hover {
+    background: var(--z-ink);
+    color: var(--z-bg);
+  }
+  .v3-btn-glass:hover {
+    background: rgb(255 255 255 / 0.2);
+  }
+  .v3-btn-light:hover {
+    background: #efecf7;
+  }
+  /* Forward arrows already point along the reading direction, so the nudge follows it */
+  [dir="rtl"] .v3-btn:hover svg {
+    transform: translateX(-3px);
+  }
+  [dir="ltr"] .v3-btn:hover svg {
+    transform: translateX(3px);
+  }
+}
+
+/* ---------- Hero ---------- */
+.v3-heroWrap {
+  padding: 16px;
+}
+.v3-hero {
+  position: relative;
+  isolation: isolate;
+  max-width: 1440px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 40px;
+  background:
+    radial-gradient(60% 75% at 92% 0%, rgb(214 0 90 / 0.28), transparent 70%),
+    radial-gradient(55% 80% at 0% 100%, rgb(91 73 201 / 0.32), transparent 70%), var(--z-dark);
+  border: 1px solid var(--z-dark-line);
+}
+[dir="ltr"] .v3-hero {
+  background:
+    radial-gradient(60% 75% at 8% 0%, rgb(214 0 90 / 0.28), transparent 70%),
+    radial-gradient(55% 80% at 100% 100%, rgb(91 73 201 / 0.32), transparent 70%), var(--z-dark);
+}
+/* React Bits DotGrid: the field reacts to the pointer and ripples on click. The card stays unclipped so
+   the activity cards can overhang it, so the field carries the rounded clip itself. */
+.v3-heroDots {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.v3-heroCopy {
+  max-width: 880px;
+  padding: 88px 24px 0;
+  text-align: center;
+  color: #fff;
+}
+.v3-hero h1 {
+  font-size: clamp(40px, 4.6vw, 62px);
+  line-height: 1.3;
+  font-weight: 700;
+  text-wrap: balance;
+}
+/* Inline blocks: each half gets a box for the staggered rise, and both share a line when they fit */
+.v3-hero h1 > span {
+  display: inline-block;
+}
+.v3-heroAccent {
+  color: var(--z-glow-pink);
+}
+[dir="ltr"] .v3-hero h1 {
+  font-size: clamp(40px, 4.4vw, 60px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.v3-heroCopy > p {
+  margin: 20px auto 0;
+  max-width: 620px;
+  font-size: 18px;
+  line-height: 1.85;
+  color: rgb(255 255 255 / 0.84);
+}
+.v3-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 36px;
+}
+.v3-actions-center {
+  justify-content: center;
+}
+/* The product rises out of the card's bottom edge, flat and centred under the copy */
+.v3-heroStage {
+  position: relative;
+  width: min(74%, 940px);
+  margin-top: 64px;
+}
+/* Soft raspberry light behind the top of the screen */
+.v3-heroStage::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -36px 12% auto;
+  height: 180px;
+  border-radius: 999px;
+  background: rgb(214 0 90 / 0.3);
+  filter: blur(80px);
+}
+/* Shows the top 64% of the 2960x1698 screenshot; the cut lines up with the card's bottom edge */
+.v3-heroScreen {
+  overflow: hidden;
+  aspect-ratio: 2960 / 1080;
+}
+.v3-heroScreen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.v3-heroFloats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  animation: rise-scale 1100ms var(--ease-out) 560ms both;
+}
+.v3-heroFloats .v3-floatCard {
+  position: absolute;
+  min-width: 250px;
+  pointer-events: auto;
+}
+/* Two cards hang off the screen's end edge, one off its start corner and over the card's bottom edge */
+.v3-heroFloats [data-kind="contract"] {
+  top: -6%;
+  inset-inline-end: -7%;
+}
+.v3-heroFloats [data-kind="invoice"] {
+  top: 54%;
+  inset-inline-end: -10%;
+}
+.v3-heroFloats [data-kind="calendar"] {
+  bottom: -30px;
+  inset-inline-start: -8%;
+}
+.v3-floatCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 290px;
+  padding: 14px 18px 14px 14px;
+  border-radius: 20px;
+  background: rgb(254 254 255 / 0.97);
+  color: #1c1447;
+  box-shadow: 0 22px 44px -18px rgb(8 4 36 / 0.5);
+  animation: v3-float 6s ease-in-out infinite alternate;
+  animation-delay: calc(var(--f, 0) * -2.1s);
+}
+[dir="rtl"] .v3-floatCard {
+  padding: 14px 14px 14px 18px;
+}
+.v3-floatCard b {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+.v3-floatCard small {
+  display: block;
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: #5f5980;
+}
+.v3-floatIcon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #ffe3ef;
+  color: #c4005a;
+}
+.v3-floatCheck {
+  margin-inline-start: auto;
+  color: #c4005a;
+}
+@keyframes v3-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+/* ---------- Partners (colour logos on the shared marquee from globals.css) ---------- */
+.v3-partners {
+  padding: 44px 0 60px;
+  text-align: center;
+}
+.v3-partners > p {
+  font-size: 14px;
+  color: var(--z-muted);
+}
+.v3-marquee {
+  margin-top: 26px;
+}
+.v3-logoSet {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 72px;
+  margin: 0;
+  padding: 0 72px 0 0;
+  list-style: none;
+}
+.v3-logoSet li {
+  display: grid;
+  place-items: center;
+  width: 140px;
+  height: 64px;
+  /* An opaque backdrop gives the blend-mode logo something to blend with inside the masked strip */
+  background: var(--z-bg);
+}
+.v3-logo {
+  height: 46px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  transition:
+    transform 260ms var(--ease-out),
+    opacity 200ms ease;
+}
+.v3-logo[data-opaque] {
+  mix-blend-mode: multiply;
+}
+[data-theme="dark"] .v3-logo {
+  filter: brightness(0) invert(1);
+  opacity: 0.72;
+}
+[data-theme="dark"] .v3-logo[data-opaque] {
+  filter: grayscale(1) contrast(2.2) invert(1);
+  mix-blend-mode: screen;
+}
+@media (hover: hover) and (pointer: fine) {
+  .v3-logo:hover {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* ---------- Bands, headings, cards ---------- */
+.v3-band {
+  padding-block: 96px;
+  background: var(--z-bg);
+}
+.v3-band-neutral {
+  background: var(--z-neutral);
+}
+.v3-band-flush {
+  padding-top: 0;
+}
+.v3-head {
+  max-width: 760px;
+  margin-bottom: 44px;
+}
+.v3-head-center {
+  margin-inline: auto;
+  text-align: center;
+}
+.v3-head h2 {
+  margin-top: 16px;
+  font-size: clamp(28px, 3.4vw, 40px);
+  line-height: 1.38;
+  font-weight: 700;
+}
+.v3-head > h2:first-child {
+  margin-top: 0;
+}
+.v3-head > p {
+  margin-top: 12px;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--z-muted);
+}
+[dir="ltr"] .v3-page h2 {
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+}
+.v3-card {
+  background: var(--z-card);
+  border-radius: 32px;
+  padding: 32px;
+}
+.v3-card-muted {
+  background: var(--z-card-muted);
+}
+
+/* ---------- Entrance ---------- */
+/* Content renders visible; browsers with view timelines let cards settle in as they scroll up */
+@keyframes v3-settle {
+  from {
+    opacity: 0.35;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .v3-in {
+      animation: v3-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 55%;
+    }
+  }
+}
+
+/* ---------- Micro-interactions ---------- */
+/* Pointer spotlight: SpotlightGroup writes --mx/--my on the hovered .spot-cell */
+.v3-page .spot-cell {
+  position: relative;
+  isolation: isolate;
+  --spot: rgb(214 0 90 / 0.075);
+}
+.v3-page .spot-dark {
+  --spot: rgb(255 255 255 / 0.13);
+}
+[data-theme="dark"] .v3-page .spot-cell:not(.spot-dark) {
+  --spot: rgb(255 106 165 / 0.09);
+}
+.v3-page .spot-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), var(--spot), transparent 65%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+/* Lift uses the standalone `translate` property so it stacks with the reveal's inline transform */
+.v3-page .v3-lift,
+.v3-bento .spot-cell {
+  transition:
+    translate 300ms var(--ease-out),
+    box-shadow 300ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .v3-page .spot-cell:hover::after {
+    opacity: 1;
+  }
+  .v3-page .v3-lift:hover,
+  .v3-bento .spot-cell:hover {
+    translate: 0 -4px;
+    box-shadow: 0 22px 44px -26px rgb(32 23 81 / 0.35);
+  }
+  .v3-heroFloats .v3-floatCard {
+    transition:
+      translate 260ms var(--ease-out),
+      box-shadow 260ms var(--ease-out);
+  }
+  .v3-heroFloats .v3-floatCard:hover {
+    translate: 0 -4px;
+    box-shadow: 0 30px 50px -18px rgb(8 4 36 / 0.6);
+  }
+  /* Audience: icon tile tips over with a little overshoot */
+  .v3-audienceCard .v3-iconTile {
+    transition:
+      rotate 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      scale 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+  .v3-audienceCard:hover .v3-iconTile {
+    rotate: -10deg;
+    scale: 1.08;
+    background: var(--z-accent);
+    color: #fffafc;
+  }
+  /* Solutions: the hovered row lights its chip and slides its arrow */
+  .v3-solutionCard li .v3-rowChip {
+    transition: background-color 200ms ease;
+  }
+  .v3-solutionCard li .v3-rowArrow {
+    transition:
+      translate 220ms var(--ease-out),
+      color 200ms ease;
+  }
+  .v3-solutionCard li:hover .v3-rowChip {
+    background: var(--z-accent);
+    color: #fffafc;
+  }
+  .v3-solutionCard li:hover .v3-rowArrow {
+    color: var(--z-accent-text);
+  }
+  [dir="rtl"] .v3-solutionCard li:hover .v3-rowArrow {
+    translate: -4px 0;
+  }
+  [dir="ltr"] .v3-solutionCard li:hover .v3-rowArrow {
+    translate: 4px 0;
+  }
+  /* Photos ease in a touch closer under the pointer */
+  .v3-splitPhoto img,
+  .v3-finalImage {
+    transition: scale 1200ms var(--ease-out);
+  }
+  .v3-splitMedia:hover .v3-splitPhoto img,
+  .v3-final:hover .v3-finalImage {
+    scale: 1.04;
+  }
+}
+
+/* ---------- Audience ---------- */
+.v3-audienceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.v3-audienceCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 32px 28px;
+}
+.v3-audienceCard h3 {
+  margin-top: 10px;
+  font-size: 21px;
+  font-weight: 700;
+}
+.v3-audienceCard p {
+  flex: 1;
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--z-muted);
+}
+.v3-audienceCard .v3-btn {
+  margin-top: 12px;
+  height: 48px;
+  padding-inline: 26px;
+  font-size: 15px;
+}
+.v3-iconTile {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: var(--z-card);
+  color: var(--z-ink);
+}
+.v3-iconTile-accent {
+  background: var(--z-blush);
+  color: var(--z-accent-text);
+}
+
+/* ---------- Solutions (tier cards) ---------- */
+.v3-solutionGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+.v3-solutionCard {
+  grid-column: span 2;
+}
+.v3-solutionCard:nth-child(n + 4) {
+  grid-column: span 3;
+}
+.v3-solutionHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.v3-solutionHead h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.v3-solutionHead small {
+  font-size: 13.5px;
+  color: var(--z-muted);
+}
+.v3-solutionCard ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.v3-solutionCard li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+}
+.v3-rowChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 38px;
+  min-width: 92px;
+  padding-inline: 14px;
+  border-radius: 12px;
+  background: var(--z-solid);
+  color: var(--z-on-solid);
+  font-size: 14px;
+  font-weight: 600;
+}
+.v3-rowArrow {
+  flex-shrink: 0;
+  color: var(--z-muted);
+}
+.v3-footnote {
+  margin-top: 20px !important;
+  font-size: 14px;
+  color: var(--z-muted);
+}
+
+/* ---------- Numbers ---------- */
+.v3-numberGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.v3-numberCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 28px 32px;
+}
+.v3-numberCard small {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--z-muted);
+}
+.v3-numberCard strong {
+  font-size: clamp(40px, 4.6vw, 60px);
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--z-accent-text);
+}
+/* ---------- Testimonials deck ---------- */
+.v3-deck {
+  margin: 40px auto 0;
+  max-width: 780px;
+}
+/* Every card shares one grid cell, so the stage is as tall as the longest quote and they all match */
+.v3-deckStage {
+  display: grid;
+  padding-bottom: 36px;
+}
+.v3-deckCard {
+  grid-area: 1 / 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 36px 40px;
+  border-radius: 32px;
+  background: var(--z-card);
+  border: 1px solid var(--z-line);
+  box-shadow:
+    0 1px 2px rgb(32 23 81 / 0.05),
+    0 24px 48px -28px rgb(32 23 81 / 0.35);
+  transition: background-color 400ms var(--ease-out);
+  will-change: transform;
+}
+.v3-deckCard[data-pos="0"] {
+  cursor: grab;
+}
+.v3-deckCard[data-pos="0"]:active {
+  cursor: grabbing;
+}
+/* Cards further back pick up the lilac, so the stack reads as layers even where only an edge shows */
+.v3-deckCard[data-pos="1"] {
+  background: color-mix(in oklab, var(--z-card) 55%, var(--z-lilac));
+}
+.v3-deckCard[data-pos="2"],
+.v3-deckCard[data-pos="3"] {
+  background: var(--z-lilac);
+}
+.v3-deckMark {
+  color: var(--z-accent-text);
+}
+[dir="rtl"] .v3-deckMark {
+  scale: -1 1;
+}
+.v3-deckCard blockquote {
+  margin: 0;
+  flex: 1;
+  font-size: clamp(18px, 1.9vw, 21px);
+  line-height: 1.85;
+  font-weight: 500;
+  text-wrap: pretty;
+}
+.v3-deckCard blockquote span {
+  color: var(--z-accent-text);
+}
+.v3-deckCard figcaption {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.v3-deckAvatar {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: var(--z-lilac);
+  color: var(--z-lilac-ink);
+  font-size: 18px;
+  font-weight: 700;
+}
+.v3-deckCard figcaption b {
+  display: block;
+  font-size: 16px;
+}
+.v3-deckCard figcaption small {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  color: var(--z-muted);
+}
+/* Dots: a 24px hit area each, the active one stretched into a pill */
+.v3-deckDots {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+.v3-deckDots button {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 999px;
+}
+.v3-deckDots button::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--z-ink) 22%, transparent);
+  transition:
+    width 300ms var(--ease-out),
+    background-color 300ms var(--ease-out);
+}
+.v3-deckDots button[aria-current="true"]::before {
+  width: 26px;
+  background: var(--z-accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .v3-deckDots button:not([aria-current="true"]):hover::before {
+    background: color-mix(in oklab, var(--z-ink) 45%, transparent);
+  }
+}
+
+/* ---------- Team split ---------- */
+.v3-splitGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.v3-splitMedia {
+  position: relative;
+  min-height: 470px;
+  overflow: hidden;
+  border-radius: 32px;
+  background: var(--z-lilac);
+}
+.v3-splitPhoto {
+  position: absolute;
+  inset: 32px 32px 0;
+  overflow: hidden;
+  border-radius: 24px 24px 0 0;
+}
+.v3-splitPhoto img {
+  object-fit: cover;
+}
+.v3-splitFloat {
+  position: absolute;
+  min-width: 240px;
+}
+.v3-splitFloat:nth-of-type(2) {
+  top: 56px;
+  inset-inline-end: 18px;
+}
+.v3-splitFloat:nth-of-type(3) {
+  bottom: 40px;
+  inset-inline-start: 18px;
+}
+.v3-splitCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px;
+}
+.v3-splitCopy h2 {
+  margin-top: 16px;
+  font-size: clamp(28px, 3.2vw, 38px);
+  line-height: 1.4;
+  font-weight: 700;
+}
+.v3-splitCopy p {
+  margin-top: 14px;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--z-muted);
+}
+.v3-splitCopy .v3-btn {
+  margin-top: 28px;
+}
+
+/* ---------- Apps screen (dashboard capture inside a Zid-style grey stage) ---------- */
+.v3-appStage {
+  padding: 32px;
+  border-radius: 40px;
+  background: var(--z-neutral);
+}
+.v3-appTilt {
+  transform-origin: center bottom;
+  will-change: transform;
+}
+/* The capture has transparent rounded corners, so drop-shadow follows the device outline */
+.v3-appShot {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 2px 4px rgb(32 23 81 / 0.1)) drop-shadow(0 30px 40px rgb(32 23 81 / 0.22));
+}
+/* Video has no alpha: round it to the device bezel (about 50px on 1920) and use a cheap box-shadow */
+.v3-appVideo {
+  border-radius: 2.6% / 4.53%;
+  background: #fff;
+  filter: none;
+  box-shadow:
+    0 2px 4px rgb(32 23 81 / 0.1),
+    0 34px 60px -28px rgb(32 23 81 / 0.42);
+}
+@media (max-width: 639px) {
+  .v3-appStage {
+    padding: 10px;
+    border-radius: 24px;
+  }
+}
+
+/* ---------- FAQ ---------- */
+.v3-faqWrap {
+  max-width: 880px;
+}
+.v3-faq {
+  display: grid;
+  gap: 12px;
+}
+.v3-faq details {
+  padding-inline: 24px;
+  border-radius: 24px;
+  background: var(--z-card);
+}
+.v3-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 22px;
+  font-size: 17px;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+.v3-faq summary::-webkit-details-marker {
+  display: none;
+}
+.v3-faqIcon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--z-card-muted);
+  transition:
+    transform 250ms var(--ease-out),
+    background-color 200ms ease,
+    color 200ms ease;
+}
+.v3-faq details[open] .v3-faqIcon {
+  transform: rotate(45deg);
+  background: var(--z-accent);
+  color: #fffafc;
+}
+.v3-faq details > p {
+  padding-bottom: 22px;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--z-muted);
+}
+/* Smooth open/close where the browser can animate to `auto`; others simply toggle */
+@supports (interpolate-size: allow-keywords) {
+  .v3-faq details::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 320ms var(--ease-out),
+      content-visibility 320ms allow-discrete;
+  }
+  .v3-faq details[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* ---------- Final CTA ---------- */
+.v3-final {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  min-height: 420px;
+  padding: 80px 24px;
+  border-radius: 40px;
+  background: var(--z-dark);
+  border: 1px solid var(--z-dark-line);
+  text-align: center;
+}
+.v3-finalImage {
+  object-fit: cover;
+  z-index: -2;
+}
+.v3-finalScrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgb(28 20 71 / 0.8), rgb(28 20 71 / 0.93));
+}
+.v3-finalCopy h2 {
+  font-size: clamp(32px, 4.2vw, 52px);
+  line-height: 1.3;
+  font-weight: 700;
+  color: #fff;
+}
+.v3-finalCopy p {
+  margin-top: 14px;
+  font-size: 18px;
+  color: rgb(255 255 255 / 0.82);
+}
+
+/* ---------- Contact (v3 form) ---------- */
+.v3-contactBand {
+  overflow-x: clip;
+}
+.v3-contactGrid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 56px;
+  align-items: start;
+}
+.v3-contactIntro {
+  position: sticky;
+  top: 112px;
+}
+.v3-contactIntro h2 {
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.3;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.v3-contactIntro > p {
+  max-width: 30rem;
+  margin-top: 14px;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--z-muted);
+}
+.v3-contactWays {
+  display: grid;
+  gap: 6px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.v3-contactWays li {
+  display: flex;
+}
+.v3-contactWays a,
+.v3-contactWays li:not(:has(a)) {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  margin-inline-start: -10px;
+  border-radius: 18px;
+  font-size: 15.5px;
+  font-weight: 600;
+  transition: background-color 200ms ease;
+}
+.v3-contactWays small {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--z-muted);
+}
+.v3-wayIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--z-neutral);
+  color: var(--z-ink);
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+.v3-formCard {
+  position: relative;
+  padding: 36px;
+  border-radius: 32px;
+  background: var(--z-neutral);
+}
+.v3-form {
+  display: grid;
+  gap: 22px;
+}
+.v3-sectors {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.v3-sectors legend {
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+.v3-chips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.v3-sectorChip {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--z-line);
+  background: var(--z-card);
+  color: var(--z-ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: pointer;
+  transition:
+    color 200ms ease,
+    border-color 200ms ease,
+    transform 160ms var(--ease-out);
+}
+.v3-sectorChip:active {
+  transform: scale(0.97);
+}
+/* Native radio stays in the tab order and arrow-key group; only its box is hidden */
+.v3-sectorChip input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.v3-sectorChip:has(input:focus-visible) {
+  outline: 2px solid var(--z-accent-text);
+  outline-offset: 2px;
+}
+.v3-sectorChip svg {
+  flex-shrink: 0;
+  color: var(--z-muted);
+  transition: color 200ms ease;
+}
+.v3-sectorChip[data-checked] {
+  border-color: transparent;
+  color: var(--z-on-solid);
+}
+.v3-sectorChip[data-checked] svg {
+  color: var(--z-on-solid);
+}
+.v3-chipGlide {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--z-solid);
+}
+.v3-sectors[data-invalid] .v3-sectorChip:not([data-checked]) {
+  border-color: color-mix(in oklab, var(--z-accent) 45%, var(--z-line));
+}
+.v3-fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.v3-field {
+  display: grid;
+  /* minmax(0, 1fr): the input's intrinsic width must not set the column's minimum */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+}
+.v3-field > label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.v3-inputWrap,
+.v3-textarea {
+  border-radius: 16px;
+  border: 1.5px solid transparent;
+  background: var(--z-card);
+  box-shadow: inset 0 0 0 1px var(--z-line);
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+.v3-inputWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 54px;
+  padding-inline: 16px;
+}
+.v3-inputWrap:focus-within,
+.v3-textarea:focus {
+  border-color: var(--z-accent-text);
+  box-shadow: 0 0 0 4px rgb(214 0 90 / 0.12);
+}
+.v3-field[data-invalid] .v3-inputWrap {
+  border-color: var(--z-accent);
+}
+.v3-inputIcon {
+  display: grid;
+  color: var(--z-muted);
+  transition: color 200ms ease;
+}
+.v3-inputWrap:focus-within .v3-inputIcon {
+  color: var(--z-accent-text);
+}
+/* 16px keeps iOS from zooming the page on focus */
+.v3-inputWrap input,
+.v3-textarea {
+  font-size: 16px;
+  color: var(--z-ink);
+  outline: none;
+}
+.v3-inputWrap input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
+.v3-prefix {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline-end: 12px;
+  border-inline-end: 1px solid var(--z-line);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--z-ink);
+}
+.v3-prefix svg {
+  color: var(--z-muted);
+}
+.v3-phoneWrap input {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+.v3-fieldError {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--z-accent-text);
+}
+.v3-note {
+  display: grid;
+  gap: 6px;
+}
+.v3-noteToggle {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 2px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--z-ink);
+  transition: color 200ms ease;
+}
+.v3-noteToggle span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--z-muted);
+}
+
+.v3-textarea {
+  display: block;
+  /* Inset by the focus-ring width so the clipping accordion never cuts the ring, and nothing peeks out when closed */
+  width: calc(100% - 8px);
+  margin: 4px;
+  min-height: 104px;
+  padding: 14px 16px;
+  line-height: 1.7;
+  resize: vertical;
+}
+.v3-formAlert {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--z-blush);
+  color: var(--z-blush-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+.v3-submit {
+  width: 100%;
+  height: 56px;
+}
+.v3-submit:disabled {
+  opacity: 0.85;
+  cursor: progress;
+}
+.v3-privacy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: -8px !important;
+  font-size: 13px;
+  color: var(--z-muted);
+}
+.v3-formDone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 480px;
+  text-align: center;
+}
+.v3-doneMark {
+  width: 76px;
+  height: 76px;
+}
+.v3-doneMark circle {
+  fill: var(--z-accent);
+}
+.v3-doneMark path {
+  fill: none;
+  stroke: #fffafc;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.v3-formDone h3 {
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  outline: none;
+}
+.v3-formDone p {
+  max-width: 22rem;
+  line-height: 1.8;
+  color: var(--z-muted);
+}
+.v3-formDone .v3-btn {
+  margin-top: 12px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .v3-contactWays a:hover {
+    background: var(--z-neutral);
+  }
+  .v3-contactWays a:hover .v3-wayIcon {
+    background: var(--z-accent);
+    color: #fffafc;
+  }
+  .v3-sectorChip:not([data-checked]):hover {
+    border-color: var(--z-ink);
+  }
+  .v3-sectorChip:not([data-checked]):hover svg {
+    color: var(--z-ink);
+  }
+  .v3-noteToggle:hover {
+    color: var(--z-accent-text);
+  }
+}
+
+.v3-footer {
+  margin: 0 16px 16px;
+  padding-top: 72px;
+  border-radius: 40px;
+  background: var(--z-dark);
+  border: 1px solid var(--z-dark-line);
+  color: rgb(255 255 255 / 0.76);
+}
+.v3-footerMain {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+  gap: 40px;
+  padding-bottom: 48px;
+}
+.v3-footerMain nav,
+.v3-footerMain > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.v3-footer h3 {
+  margin-bottom: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+.v3-footerMain a,
+.v3-footerMain p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-block: 6px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  transition: color 200ms ease;
+}
+.v3-footerMain a:hover,
+.v3-footerBottom a:hover {
+  color: #fff;
+}
+.v3-footerBrand p {
+  max-width: 260px;
+  margin-top: 14px;
+}
+.v3-footerBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 22px 28px;
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+  font-size: 13.5px;
+}
+.v3-footerBottom a {
+  font-weight: 600;
+  color: rgb(255 255 255 / 0.9);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1023px) {
+  .v3-desktopNav {
+    display: none;
+  }
+  .v3-menuButton {
+    display: grid;
+  }
+  .v3-mobileNav {
+    display: flex;
+  }
+  .v3-heroCopy {
+    padding-top: 72px;
+  }
+  .v3-heroStage {
+    width: 86%;
+    margin-top: 48px;
+  }
+  .v3-heroFloats .v3-floatCard {
+    min-width: 0;
+  }
+  .v3-heroFloats [data-kind="contract"],
+  .v3-heroFloats [data-kind="invoice"] {
+    inset-inline-end: -5%;
+  }
+  .v3-heroFloats [data-kind="calendar"] {
+    inset-inline-start: -4%;
+  }
+  .v3-contactGrid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .v3-contactIntro {
+    position: static;
+  }
+  .v3-splitGrid {
+    grid-template-columns: 1fr;
+  }
+  .v3-audienceGrid {
+    grid-template-columns: 1fr;
+  }
+  .v3-solutionGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .v3-solutionCard,
+  .v3-solutionCard:nth-child(n + 4) {
+    grid-column: span 1;
+  }
+  .v3-solutionCard:last-child {
+    grid-column: span 2;
+  }
+  .v3-footerMain {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/* Phones: the screen keeps its full width and runs further down to the card's edge, and the activity
+   cards shrink to small badges that frame it rather than cover it */
+@media (max-width: 767px) {
+  .v3-heroStage {
+    width: calc(100% - 20px);
+    margin-top: 40px;
+  }
+  .v3-heroScreen {
+    aspect-ratio: 2960 / 1600;
+  }
+  .v3-heroFloats .v3-floatCard {
+    gap: 6px;
+    padding: 5px 9px 5px 5px;
+    border-radius: 11px;
+    box-shadow: 0 10px 22px -10px rgb(8 4 36 / 0.55);
+  }
+  [dir="rtl"] .v3-heroFloats .v3-floatCard {
+    padding: 5px 5px 5px 9px;
+  }
+  .v3-heroFloats .v3-floatIcon {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+  }
+  .v3-heroFloats .v3-floatIcon svg,
+  .v3-heroFloats .v3-floatCheck {
+    width: 12px;
+    height: 12px;
+  }
+  .v3-heroFloats .v3-floatCard b {
+    font-size: 10.5px;
+    line-height: 1.4;
+  }
+  .v3-heroFloats .v3-floatCard small {
+    margin-top: 0;
+    font-size: 9px;
+    line-height: 1.4;
+  }
+  /* Kept to the screen's edges: one straddles the top, one the end side, one the card's bottom edge */
+  .v3-heroFloats [data-kind="contract"] {
+    top: -9%;
+    inset-inline-end: 4%;
+  }
+  .v3-heroFloats [data-kind="invoice"] {
+    top: 50%;
+    inset-inline-end: -1%;
+  }
+  .v3-heroFloats [data-kind="calendar"] {
+    bottom: -14px;
+    inset-inline-start: 3%;
+  }
+}
+@media (max-width: 639px) {
+  .v3-container {
+    padding-inline: 20px;
+  }
+  .v3-band {
+    padding-block: 64px;
+  }
+  .v3-band-flush {
+    padding-top: 0;
+  }
+  .v3-headerInner {
+    padding-inline: 16px;
+  }
+  .v3-headerCta {
+    display: none;
+  }
+  .v3-heroWrap {
+    padding: 8px;
+  }
+  .v3-formCard {
+    padding: 20px;
+    border-radius: 28px;
+  }
+  .v3-chips {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .v3-fieldRow {
+    grid-template-columns: 1fr;
+  }
+  .v3-partners {
+    padding: 36px 0 44px;
+  }
+  .v3-logoSet {
+    gap: 40px;
+    padding-inline-end: 40px;
+  }
+  .v3-logoSet li {
+    width: 104px;
+    height: 52px;
+  }
+  .v3-logo {
+    height: 34px;
+    max-width: 104px;
+  }
+  .v3-hero {
+    border-radius: 28px;
+  }
+  .v3-heroCopy {
+    padding: 44px 20px 0;
+  }
+  .v3-hero h1 {
+    font-size: 36px;
+  }
+  .v3-heroCopy > p {
+    font-size: 16.5px;
+  }
+  .v3-actions .v3-btn {
+    flex: 1 1 auto;
+  }
+  .v3-btn {
+    height: 50px;
+    padding-inline: 24px;
+    font-size: 15px;
+  }
+  .v3-card {
+    padding: 24px;
+    border-radius: 28px;
+  }
+  .v3-numberGrid {
+    grid-template-columns: 1fr;
+  }
+  .v3-solutionGrid {
+    grid-template-columns: 1fr;
+  }
+  .v3-solutionCard:last-child {
+    grid-column: span 1;
+  }
+  .v3-rowChip {
+    min-width: 82px;
+    font-size: 13px;
+  }
+  .v3-deckCard {
+    padding: 28px 24px;
+    border-radius: 28px;
+  }
+  .v3-splitMedia {
+    min-height: 380px;
+    border-radius: 28px;
+  }
+  .v3-splitPhoto {
+    inset: 20px 20px 0;
+  }
+  .v3-splitFloat {
+    min-width: 0;
+  }
+  .v3-splitCopy {
+    padding: 32px 24px;
+  }
+  .v3-faq details {
+    padding-inline: 18px;
+  }
+  .v3-faq summary {
+    font-size: 15.5px;
+    line-height: 1.7;
+  }
+  .v3-final {
+    min-height: 0;
+    padding: 56px 20px;
+    border-radius: 28px;
+  }
+  .v3-footer {
+    margin: 0 8px 8px;
+    border-radius: 28px;
+    padding-top: 52px;
+  }
+  .v3-footerMain {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .v3-footerBottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v3-page .v3-lift,
+  .v3-bento .spot-cell,
+  .v3-heroFloats .v3-floatCard,
+  .v3-audienceCard .v3-iconTile,
+  .v3-solutionCard li .v3-rowArrow,
+  .v3-splitPhoto img,
+  .v3-finalImage {
+    translate: none !important;
+    rotate: none !important;
+    scale: none !important;
+  }
+  .v3-floatCard {
+    animation: none;
+  }
+  .v3-heroFloats {
+    animation: fade 300ms ease both;
+  }
+  .v3-btn,
+  .v3-btn:active,
+  .v3-btn svg {
+    transform: none !important;
+  }
+  .v3-faq details::details-content {
+    transition: none;
+  }
+}
