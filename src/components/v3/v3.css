@@ -72,9 +72,13 @@ html:has(.v3-page) {
 .v3-page {
   caret-color: var(--z-accent);
 }
-.v3-page :is(a, button, summary, input, select, textarea):focus-visible {
-  outline: 2px solid var(--z-accent-text);
-  outline-offset: 3px;
+/* Layered so fields that draw their own focus ring on a wrapper (form inputs, the subdomain field) can drop
+   the outline; unlayered, this rule outranked them and drew a second, square ring inside the rounded one. */
+@layer base {
+  .v3-page :is(a, button, summary, input, select, textarea):focus-visible {
+    outline: 2px solid var(--z-accent-text);
+    outline-offset: 3px;
+  }
 }
 .v3-container {
   max-width: 1200px;
