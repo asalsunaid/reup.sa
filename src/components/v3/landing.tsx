@@ -21,6 +21,7 @@ import {
 import type { Metadata } from "next";
 import Image from "next/image";
 import { contact, getDict, partners, type Locale } from "@/lib/content";
+import { buildMetadata } from "@/lib/metadata";
 import { CountUp } from "../count-up";
 import DotGrid from "../bits/DotGrid";
 import { Logo } from "../logo";
@@ -33,12 +34,9 @@ import { ModulesVideo } from "./modules-video";
 import { Testimonials } from "./testimonials";
 
 export function v3Metadata(locale: Locale): Metadata {
-  return {
-    title: getV3(locale).meta.title,
-    description: getDict(locale).meta.description,
-    alternates: { canonical: locale === "ar" ? "/v3" : "/en/v3", languages: { ar: "/v3", en: "/en/v3" } },
-    robots: { index: false, follow: true },
-  };
+  const title = getV3(locale).meta.title;
+  // The root layout already sets the description, canonical URL and language alternates
+  return { title, openGraph: { ...buildMetadata(locale).openGraph, title } };
 }
 
 const floatIcons = { contract: Signature, calendar: CalendarCheck, invoice: Receipt } as const;
@@ -109,7 +107,8 @@ export function V3Landing({ locale }: { locale: Locale }) {
                     alt={v.hero.alt}
                     width={2960}
                     height={1698}
-                    preload
+                    loading="eager"
+                    fetchPriority="high"
                     quality={90}
                     sizes="(min-width: 1280px) 960px, 92vw"
                   />
@@ -169,11 +168,7 @@ export function V3Landing({ locale }: { locale: Locale }) {
                 <h2>{v.offer.title}</h2>
                 <p>{v.offer.sub}</p>
               </div>
-              <PlatformGrid
-                t={{ ...t.platform, roles: { ...t.platform.roles, title: v.offer.rolesTitle } }}
-                interactive
-                brandPreview="dashboard"
-              />
+              <PlatformGrid t={{ ...t.platform, roles: { ...t.platform.roles, title: v.offer.rolesTitle } }} />
             </div>
           </section>
 
@@ -376,8 +371,8 @@ export function V3Landing({ locale }: { locale: Locale }) {
               </a>
             ))}
           </nav>
-          <nav aria-label={t.footer.groups[0].title}>
-            <h3>{t.footer.groups[0].title}</h3>
+          <nav aria-label={t.footer.solutionsTitle}>
+            <h3>{t.footer.solutionsTitle}</h3>
             {v.solutions.items.map((s) => (
               <a key={s.key} href="#solutions" dir="auto">
                 {s.name}
@@ -404,7 +399,7 @@ export function V3Landing({ locale }: { locale: Locale }) {
           <p>
             <span dir="ltr">© 2026 REUP.</span> {t.footer.rights}
           </p>
-          <a href={ar ? "/en/v3" : "/v3"} lang={t.nav.lang.code} hrefLang={t.nav.lang.code}>
+          <a href={ar ? "/en" : "/"} lang={t.nav.lang.code} hrefLang={t.nav.lang.code}>
             {t.nav.lang.label}
           </a>
         </div>

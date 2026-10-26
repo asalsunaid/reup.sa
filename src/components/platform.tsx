@@ -15,43 +15,14 @@ function CellText({ title, body, tone = "default" }: { title: string; body: stri
   );
 }
 
-export function Platform({ t }: { t: Dict["platform"] }) {
-  return (
-    <section id="platform" className="py-24 sm:py-32">
-      <div className="mx-auto max-w-[1240px] px-5 sm:px-8">
-        <Reveal className="max-w-[44rem]">
-          <h2 className="display text-[2.1rem] leading-[1.25] font-semibold text-ink sm:text-[2.9rem] sm:leading-[1.2]">
-            {t.title}
-          </h2>
-          <p className="mt-5 max-w-[38rem] text-[1.06rem] leading-[1.85] text-muted">{t.sub}</p>
-        </Reveal>
-        <PlatformGrid t={t} className="mt-14" />
-      </div>
-    </section>
-  );
-}
-
-/**
- * The five platform cells. `spot-cell` / `spot-dark` are hooks for pages that add a pointer spotlight (v3);
- * `interactive` turns the role permissions into toggles; `brandPreview` picks what the brand colours repaint.
- */
-export function PlatformGrid({
-  t,
-  interactive = false,
-  brandPreview = "store",
-  className = "",
-}: {
-  t: Dict["platform"];
-  interactive?: boolean;
-  brandPreview?: "store" | "dashboard";
-  className?: string;
-}) {
+/** The five platform cells. `spot-cell` / `spot-dark` hook into the page's pointer spotlight. */
+export function PlatformGrid({ t, className = "" }: { t: Dict["platform"]; className?: string }) {
   return (
     <div className={`grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12 ${className}`}>
       {/* Brand + domain: interactive white-label demo */}
       <Reveal className="spot-cell flex flex-col justify-between gap-8 overflow-hidden rounded-[20px] border border-line bg-surface p-6 sm:p-8 md:col-span-2 lg:col-span-7">
         <CellText title={t.brand.title} body={t.brand.body} />
-        <BrandDemo t={t.brand} preview={brandPreview} />
+        <BrandDemo t={t.brand} />
       </Reveal>
 
       {/* Payments feed */}
@@ -108,7 +79,7 @@ export function PlatformGrid({
         className="spot-cell flex flex-col gap-7 rounded-[20px] border border-line bg-surface p-6 sm:p-8 lg:col-span-4"
       >
         <CellText title={t.roles.title} body={t.roles.body} />
-        <RolesList t={t.roles} interactive={interactive} />
+        <RolesList t={t.roles} />
       </Reveal>
 
       {/* Isolation and security */}

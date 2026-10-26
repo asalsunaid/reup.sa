@@ -13,8 +13,8 @@ const initialMatrix = [
   [true, false, false, false],
 ];
 
-/** Team roles with a permission strip. When `interactive`, each permission is a toggle visitors can flip. */
-export function RolesList({ t, interactive = false }: { t: Dict["platform"]["roles"]; interactive?: boolean }) {
+/** Team roles with a permission strip; each permission is a toggle visitors can flip. */
+export function RolesList({ t }: { t: Dict["platform"]["roles"] }) {
   const [matrix, setMatrix] = useState(initialMatrix);
   const reduce = useReducedMotion();
 
@@ -38,13 +38,6 @@ export function RolesList({ t, interactive = false }: { t: Dict["platform"]["rol
               const tile = `grid size-6 place-items-center rounded-[7px] transition-colors duration-200 ${
                 on ? "bg-accent-soft text-accent" : "text-subtle/60"
               }`;
-              if (!interactive) {
-                return (
-                  <span key={j} className={tile}>
-                    <Icon size={13} weight={on ? "fill" : "regular"} aria-hidden />
-                  </span>
-                );
-              }
               return (
                 <button
                   key={j}
